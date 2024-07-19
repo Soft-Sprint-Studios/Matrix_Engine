@@ -1,6 +1,6 @@
  pathos_x64
 
- Timestamp is 669a9090 (Fri Jul 19 19:13:04 2024)
+ Timestamp is 669aa2fc (Fri Jul 19 20:31:40 2024)
 
  Preferred load address is 0000000140000000
 
@@ -7381,7 +7381,7 @@
  0002:0004add4       __real@3ecccccc            000000014024edd4     r_menuparticles.obj
  0002:0004add8       __real@3ed55555            000000014024edd8     console.obj
  0002:0004ade0       __real@3ee4f8b580000000    000000014024ede0     r_common.obj
- 0002:0004ade8       __real@3f000000            000000014024ede8     libvorbis_static:lsp.obj
+ 0002:0004ade8       __real@3f000000            000000014024ede8     libvorbis_static:floor0.obj
  0002:0004adec       __real@3f1eb850            000000014024edec     r_legacyparticles.obj
  0002:0004adf0       __real@3f23d70a            000000014024edf0     r_legacyparticles.obj
  0002:0004adf4       __real@3f266666            000000014024edf4     r_lensflare.obj
@@ -7433,7 +7433,7 @@
  0002:0004af50       __real@3fe99999a0000000    000000014024ef50     sv_physics.obj
  0002:0004af58       __real@3fecccccc0000000    000000014024ef58     sv_physics.obj
  0002:0004af60       __real@3feccccccccccccd    000000014024ef60     r_lensflare.obj
- 0002:0004af68       __real@3ff0000000000000    000000014024ef68     libvorbis_static:floor1.obj
+ 0002:0004af68       __real@3ff0000000000000    000000014024ef68     libvorbis_static:psy.obj
  0002:0004af70       __real@3ff004189374bc6a    000000014024ef70     vbm_shared.obj
  0002:0004af78       __real@3ff5555555555555    000000014024ef78     r_menu.obj
  0002:0004af80       __real@3ff7154760000000    000000014024ef80     libvorbis_static:psy.obj
@@ -7491,7 +7491,7 @@
  0002:0004b10c       __real@41000000            000000014024f10c     libvorbis_static:psy.obj
  0002:0004b110       __real@41100000            000000014024f110     r_beams.obj
  0002:0004b114       __real@41180000            000000014024f114     r_main.obj
- 0002:0004b118       __real@41200000            000000014024f118     flexmanager.obj
+ 0002:0004b118       __real@41200000            000000014024f118     r_vbm.obj
  0002:0004b11c       __real@413c3c3c            000000014024f11c     flexmanager.obj
  0002:0004b120       __real@413e848000000000    000000014024f120     system.obj
  0002:0004b128       __real@41400000            000000014024f128     cl_tempentities.obj
