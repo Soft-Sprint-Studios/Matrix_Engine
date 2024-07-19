@@ -281,7 +281,7 @@ namespace Sledge.BspEditor.Tools.Texture
 
             if (!GetMemory("TriggerShow", true))
             {
-                var excludedTriggerTextures = new[] { "hint", "skip", "null", "bevel", "aaatrigger", "sky", "origin", "skybox", "solidhint", "monitor", "clip" };
+                var excludedTriggerTextures = new[] { "hint", "skip", "null", "bevel", "aaatrigger", "sky", "origin", "skybox", "solidhint", "monitor", "clip", "portal" };
                 list = list.Where(x => !excludedTriggerTextures.Any(t => x.Equals(t, StringComparison.OrdinalIgnoreCase)));
             }
 
