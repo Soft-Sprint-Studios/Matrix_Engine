@@ -1,0 +1,1 @@
+0(312) : error C1503: undefined variable "aomaptex"

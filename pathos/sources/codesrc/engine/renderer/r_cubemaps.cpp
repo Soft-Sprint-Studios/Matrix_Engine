@@ -30,13 +30,16 @@ void Cmd_BuildCubemaps( void ) { gCubemaps.BuildCubemaps(); }
 
 // Cubemap resolutions available
 Uint32 CCubemapManager::g_cubemapResolutions[NUM_CUBEMAP_SIZES][2] =
-{ 
+{
+	{ 4, 4 },
+	{ 8, 8 },
 	{ 16, 16 },
 	{ 32, 32 },
 	{ 64, 64 },
 	{ 128, 128 },
 	{ 256, 256 },
-	{ 512, 512 }
+	{ 512, 512 },
+	{ 1024, 1024 }
 };
 
 // Cubemap interpolation time
@@ -783,8 +786,9 @@ bool CCubemapManager::RenderCubemaps( cl_entity_t* pRenderEntities, Uint32 numRe
 			byte* pdest = m_cubemapsArray[i].pimagedata + imagedatasize * j;
 			glReadPixels(0, 0, m_cubemapsArray[i].width, m_cubemapsArray[i].height, GL_RGB, GL_UNSIGNED_BYTE, pdest);
 
+			CString directory = "cubemap/";
 			CString filepath;
-			filepath << "cubemap_" << static_cast<Int32>(i) << "_" << static_cast<Int32>(j) << ".tga";
+			filepath << directory.c_str() << "cubemap_" << (Int32)i << "_" << (Int32)j << ".tga";
 			TGA_Write(pdest, 3, m_cubemapsArray[i].width, m_cubemapsArray[i].height, filepath.c_str(), FL_GetInterface(), Con_EPrintf);
 
 			// Save it to the OGL texture too

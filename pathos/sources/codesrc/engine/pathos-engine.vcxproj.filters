@@ -393,6 +393,12 @@
     <ClCompile Include="renderer\r_fbocache.cpp">
       <Filter>Source Files\renderer</Filter>
     </ClCompile>
+    <ClCompile Include="discordrpc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="bmp.cpp">
+      <Filter>Source Files\common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system.h">
@@ -877,6 +883,15 @@
     </ClInclude>
     <ClInclude Include="renderer\r_fbocache.h">
       <Filter>Header Files\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="discordrpc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bmp.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="bmpformat.h">
+      <Filter>Header Files\common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

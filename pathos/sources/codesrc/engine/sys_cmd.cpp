@@ -84,6 +84,57 @@ void Cmd_LoadMap( void )
 	SV_SpawnGame(pstrFilename);
 }
 
+void Cmd_ListMaps() {
+	char mapDirectory[MAX_PATH];
+	snprintf(mapDirectory, MAX_PATH, "%s\\maps\\", DEFAULT_GAMEDIR);
+
+	char searchPath[MAX_PATH];
+	snprintf(searchPath, MAX_PATH, "%s*.bsp", mapDirectory);
+
+	WIN32_FIND_DATA fileData;
+	HANDLE hFind = FindFirstFile(searchPath, &fileData);
+	if (hFind == INVALID_HANDLE_VALUE) {
+		Con_Printf("Error: Could not open the maps folder.\n");
+		return;
+	}
+
+	size_t mapListSize = 10;
+	char** mapList = (char**)malloc(mapListSize * sizeof(char*));
+	size_t mapCount = 0;
+
+	do {
+		if (mapCount >= mapListSize) {
+			mapListSize *= 2;
+			mapList = (char**)realloc(mapList, mapListSize * sizeof(char*));
+		}
+
+		char* fileName = fileData.cFileName;
+		size_t len = strlen(fileName);
+		if (len > 4 && strcmp(fileName + len - 4, ".bsp") == 0) {
+			char* mapName = (char*)malloc(len - 3);
+			strncpy(mapName, fileName, len - 4);
+			mapName[len - 4] = '\0';
+
+			mapList[mapCount] = mapName;
+			mapCount++;
+		}
+	} while (FindNextFile(hFind, &fileData) != 0);
+	FindClose(hFind);
+
+	if (mapCount == 0) {
+		Con_Printf("No maps found in the maps folder.\n");
+	}
+	else {
+		Con_Printf("List of maps in the maps folder:\n");
+		for (size_t i = 0; i < mapCount; ++i) {
+			Con_Printf("- %s\n", mapList[i]);
+			free(mapList[i]);
+		}
+	}
+
+	free(mapList);
+}
+
 //=============================================
 // @brief Pauses the game
 // 
@@ -94,6 +145,12 @@ void Cmd_Pause( void )
 		return;
 
 	Sys_SetPaused(svs.paused ? false : true, true);
+}
+
+void Cmd_Pos(void) {
+	char position_str[256];
+	snprintf(position_str, sizeof(position_str), "Current Pos: %f, %f, %f", rns.view.v_origin.x, rns.view.v_origin.y, rns.view.v_origin.z);
+	Con_Printf(position_str);
 }
 
 //=============================================
@@ -558,8 +615,10 @@ void Cmd_ChangeLevel( void )
 void Sys_InitCommands( void )
 {
 	gCommands.CreateCommand("pause", Cmd_Pause, "Pauses the game");
+	gCommands.CreateCommand("getpos", Cmd_Pos, "Position of the player in the world");
 	gCommands.CreateCommand("quit", Cmd_Sys_Quit, "Exits the application");
 	gCommands.CreateCommand("map", Cmd_LoadMap, "Loads a map");
+	gCommands.CreateCommand("maps", Cmd_ListMaps, "List of all maps");
 	gCommands.CreateCommand("save", Cmd_Save, "Saves the game");
 	gCommands.CreateCommand("quicksave", Cmd_QuickSave, "Creates a quicksave");
 	gCommands.CreateCommand("autosave", Cmd_AutoSave, "Creates an autosave");

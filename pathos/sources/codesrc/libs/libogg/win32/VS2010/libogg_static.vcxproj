@@ -142,7 +142,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <AdditionalIncludeDirectories>..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LIBOGG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LIBOGG_EXPORTS;%(PreprocessorDefinitions);_HAS_STD_BYTE=0</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -156,6 +156,7 @@
       <CompileAs>CompileAsC</CompileAs>
       <DisableSpecificWarnings>4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <CallingConvention>Cdecl</CallingConvention>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>

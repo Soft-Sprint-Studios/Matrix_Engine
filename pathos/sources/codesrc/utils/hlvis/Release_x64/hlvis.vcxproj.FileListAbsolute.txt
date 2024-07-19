@@ -1,0 +1,2 @@
+D:\sourcesdk\Matrix_Engine\base\sources\codesrc\utils\hlvis\Release_x64\hlvis.exe
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlvis\Release_x64\hlvis.exe

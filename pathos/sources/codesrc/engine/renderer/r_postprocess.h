@@ -23,7 +23,10 @@ enum pp_shadertypes_t
 	SHADER_MBLUR,
 	SHADER_ENVFADE,
 	SHADER_GRAIN,
-	SHADER_NORMAL
+	SHADER_NORMAL,
+	SHADER_CHROMATIC,
+	SHADER_BW,
+	SHADER_VIGNETTE
 };
 
 struct pp_shader_attribs
@@ -38,6 +41,10 @@ struct pp_shader_attribs
 		u_screenwidth(CGLSLShader::PROPERTY_UNAVAILABLE),
 		u_screenheight(CGLSLShader::PROPERTY_UNAVAILABLE),
 		u_timer(CGLSLShader::PROPERTY_UNAVAILABLE),
+		u_chromaticStrength(CGLSLShader::PROPERTY_UNAVAILABLE),
+		u_BWStrength(CGLSLShader::PROPERTY_UNAVAILABLE),
+		u_VignetteStrength(CGLSLShader::PROPERTY_UNAVAILABLE),
+		u_VignetteRadius(CGLSLShader::PROPERTY_UNAVAILABLE),
 		u_offsetdivider(CGLSLShader::PROPERTY_UNAVAILABLE),
 		u_texture1(CGLSLShader::PROPERTY_UNAVAILABLE),
 		u_texture1rect(CGLSLShader::PROPERTY_UNAVAILABLE),
@@ -60,6 +67,10 @@ struct pp_shader_attribs
 	Int32	u_screenwidth;
 	Int32	u_screenheight;
 	Int32	u_timer;
+	Int32	u_chromaticStrength;
+	Int32	u_VignetteStrength;
+	Int32	u_VignetteRadius;
+	Int32	u_BWStrength;
 	Int32	u_offsetdivider;
 
 	Int32	u_texture1;
@@ -117,6 +128,12 @@ private:
 	bool DrawFade( screenfade_t& fade );
 	// Draws screen film grain
 	bool DrawFilmGrain( void );
+	// Draws screen chromatic
+	bool DrawChromatic(void);
+	// Draws screen BW
+	bool DrawBW(void);
+	// Draws screen Vignette
+	bool DrawVignette(void);
 
 	// Fetches screen contents
 	static void FetchScreen( rtt_texture_t** ptarget );
@@ -176,7 +193,21 @@ private:
 
 	// Filmgrain cvar
 	CCVar*			m_pCvarFilmGrain;
-	// Postporcess cvar
+	// Chromatic cvar
+	CCVar* m_pCvarChromatic;
+	// Chromatic strength cvar
+	CCVar* m_pCvarChromaticStrength;
+	// BW cvar
+	CCVar* m_pCvarBW;
+	// BW strength cvar
+	CCVar* m_pCvarBWStrength;
+	// Vignette cvar
+	CCVar* m_pCvarVignette;
+	// Vignette strength cvar
+	CCVar* m_pCvarVignetteStrength;
+	// Vignette Radius cvar
+	CCVar* m_pCvarVignetteRadius;
+	// Postprocess cvar
 	CCVar*			m_pCvarPostProcess;
 
 	// Screen RTT

@@ -15,6 +15,7 @@ All Rights Reserved.
 
 #include "tga.h"
 #include "dds.h"
+#include "bmp.h"
 
 #ifndef GL_MAX_TEXTURE_MAX_ANISOTROPY
 #define GL_MAX_TEXTURE_MAX_ANISOTROPY 0x84FF
@@ -535,6 +536,8 @@ texture_format_t CTextureManager::GetFormat( const Char* pstrFilename )
 		return TX_FORMAT_TGA;
 	else if(!qstrcicmp(pstrFilename + qstrlen(pstrFilename) - 3, "dds"))
 		return TX_FORMAT_DDS;
+	else if (!qstrcicmp(pstrFilename + qstrlen(pstrFilename) - 3, "bmp"))
+		return TX_FORMAT_BMP;
 	else
 		return TX_FORMAT_UNDEFINED;
 }
@@ -556,6 +559,8 @@ mt_texture_t CTextureManager::GetTextureType( const Char* pstrTypename )
 		return MT_TX_SPECULAR;
 	else if(!qstrcmp(pstrTypename, "luminance"))
 		return MT_TX_LUMINANCE;
+	else if (!qstrcmp(pstrTypename, "ao"))
+		return MT_TX_AO;
 	else
 		return MT_TX_UNKNOWN;
 }
@@ -660,6 +665,7 @@ en_material_t* CTextureManager::LoadMaterialScript( const Char* pstrFilename, rs
 		pmaterial->alpha = 1.0;
 		pmaterial->spec_factor = DEFAULT_SPECFACTOR;
 		pmaterial->phong_exp = DEFAULT_PHONG_EXP;
+		pmaterial->cubemapnormal = 0.15;
 	}
 
 	static Char line[MAX_LINE_LENGTH];
@@ -753,6 +759,7 @@ en_material_t* CTextureManager::LoadMaterialScript( const Char* pstrFilename, rs
 			else if(!qstrcmp(token, "$dt_scalex") || !qstrcmp(token, "$dt_scaley")
 					|| !qstrcmp(token, "$int_width") || !qstrcmp(token, "$int_height")
 					|| !qstrcmp(token, "$alpha") || !qstrcmp(token, "$phong_exp")
+				    || !qstrcmp(token, "$alpha") || !qstrcmp(token, "$cubemapnormal")
 					|| !qstrcmp(token, "$spec") || !qstrcmp(token, "$scopescale") 
 					|| !qstrcmp(token, "$cubemapstrength") || !qstrcmp(token, "$container")
 					|| !qstrcmp(token, "$scrollu") || !qstrcmp(token, "$scrollv"))
@@ -785,6 +792,8 @@ en_material_t* CTextureManager::LoadMaterialScript( const Char* pstrFilename, rs
 					pmaterial->alpha = static_cast<Float>(SDL_atof(value));
 				else if(!qstrcmp(token, "$phong_exp"))
 					pmaterial->phong_exp = static_cast<Float>(SDL_atof(value));
+				else if (!qstrcmp(token, "$cubemapnormal"))
+					pmaterial->cubemapnormal = (Float)SDL_atof(value);
 				else if(!qstrcmp(token, "$spec"))
 					pmaterial->spec_factor = static_cast<Float>(SDL_atof(value));
 				else if(!qstrcmp(token, "$scopescale"))
@@ -989,6 +998,14 @@ en_texture_t* CTextureManager::LoadTexture( const Char* pstrFilename, rs_level_t
 			pfile = m_fileFuncs.pfnLoadFile(filePath.c_str(), nullptr);
 		}
 
+		if (filePath.find(0, ".bmp") != -1 || filePath.find(0, ".BMP") != -1)
+		{
+			filePath.erase(filePath.length() - 3, 3);
+			filePath << "bmp";
+
+			pfile = m_fileFuncs.pfnLoadFile(filePath.c_str(), nullptr);
+		}
+
 		if(!pfile)
 		{
 			m_printErrorFunction("Failed to load texture '%s'.\n", filePath.c_str());
@@ -1018,6 +1035,13 @@ en_texture_t* CTextureManager::LoadTexture( const Char* pstrFilename, rs_level_t
 		if(!DDS_Load(pstrFilename, pfile, pdata, width, height, bpp, datasize, compression, m_printErrorFunction))
 		{
 			m_printErrorFunction("Failed to load DDS image file '%s'.\n", pstrFilename);
+			m_fileFuncs.pfnFreeFile(pfile);
+			return nullptr;
+		}
+	}
+	else if (format == TX_FORMAT_BMP) {
+		if (!BMP_Load(pstrFilename, pfile, pdata, width, height, bpp, datasize, compression, m_printErrorFunction)) {
+			m_printErrorFunction("Failed to load BMP image file '%s'.\n", pstrFilename);
 			m_fileFuncs.pfnFreeFile(pfile);
 			return nullptr;
 		}
@@ -1579,6 +1603,9 @@ void CTextureManager::WritePMFFile( en_material_t* pmaterial )
 	if(pmaterial->scale)
 		data << "\t$scopescale " << pmaterial->scale << NEWLINE;
 
+	if (pmaterial->cubemapnormal)
+		data << "\t$cubemapnormal " << pmaterial->cubemapnormal << NEWLINE;
+
 	if(pmaterial->cubemapstrength)
 		data << "\t$cubemapstrength " << pmaterial->cubemapstrength << NEWLINE;
 
@@ -1605,6 +1632,9 @@ void CTextureManager::WritePMFFile( en_material_t* pmaterial )
 
 	if(pmaterial->ptextures[MT_TX_LUMINANCE])
 		data << "\t$texture luminance " << pmaterial->ptextures[MT_TX_LUMINANCE]->filepath << NEWLINE;
+
+	if (pmaterial->ptextures[MT_TX_AO])
+		data << "\t$texture ao " << pmaterial->ptextures[MT_TX_AO]->filepath << NEWLINE;
 
 	data << "}" << NEWLINE;
 

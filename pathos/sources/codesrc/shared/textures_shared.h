@@ -46,6 +46,7 @@ enum mt_texture_t
 	MT_TX_DETAIL,
 	MT_TX_SPECULAR,
 	MT_TX_LUMINANCE,
+	MT_TX_AO,
 
 	// Must be last
 	NB_MT_TX,
@@ -56,6 +57,7 @@ enum texture_format_t
 	TX_FORMAT_UNDEFINED = 0,
 	TX_FORMAT_TGA,
 	TX_FORMAT_DDS,
+	TX_FORMAT_BMP,
 	TX_FORMAT_MEMORY
 };
 
@@ -127,6 +129,7 @@ struct en_material_t
 		spec_factor(0),
 		scale(0),
 		cubemapstrength(0),
+		cubemapnormal(0),
 		scrollu(0),
 		scrollv(0),
 		flags(TX_FL_NONE),
@@ -155,6 +158,7 @@ struct en_material_t
 	Float spec_factor;
 	Float scale;
 	Float cubemapstrength;
+	Float cubemapnormal;
 	Float scrollu;
 	Float scrollv;
 

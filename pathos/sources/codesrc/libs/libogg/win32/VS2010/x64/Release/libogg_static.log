@@ -1,1 +1,11 @@
-﻿
+﻿  bitwise.c
+  framing.c
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\libs\libogg\src\framing.c(733,20): warning C4456: declaration of 'page' hides previous local declaration
+  D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\libs\libogg\src\framing.c(678,18):
+  see declaration of 'page'
+  
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\libs\libogg\src\framing.c(734,10): warning C4456: declaration of 'bytes' hides previous local declaration
+  D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\libs\libogg\src\framing.c(680,8):
+  see declaration of 'bytes'
+  
+  libogg_static.vcxproj -> D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\x64\Release\libogg_static.lib

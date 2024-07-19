@@ -75,7 +75,7 @@ static constexpr Float PLAYER_SWIM_SPEED = 115.0f;
 // Ducking multiplier for speed
 static constexpr Float DUCKING_SPEED_MULTIPLIER = 0.4;
 // Noclip movement speed
-static constexpr Float PLAYER_NOCLIP_SPEED = 600;
+static constexpr Float PLAYER_NOCLIP_SPEED = 1200;
 
 // Maximum noise amount
 static constexpr Float PLAYER_MAX_NOISE_LEVEL = 950;
@@ -164,7 +164,7 @@ static const Char HUMAN_GIBS_MODEL_FILENAME[] = "models/humangibs.mdl";
 // View hands model path
 const Char V_SEQUENCES_MODEL_NAME[] = "models/v_sequences.mdl";
 // Default skybox name
-static const Char DEFAULT_SKYBOX_NAME[] = "mountain_";
+static const Char DEFAULT_SKYBOX_NAME[] = "";
 // Glass material type name
 static const Char GLASS_MATERIAL_TYPE_NAME[] = "glass";
 // Organic material type name

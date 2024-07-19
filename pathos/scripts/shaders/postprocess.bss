@@ -19,7 +19,7 @@ void main()
 }
 $end
 $shader_fragment 
-$determinator pp_type 0 7
+$determinator pp_type 0 10
 $begin
 #version 130
 $branch rectangle == 1
@@ -174,6 +174,20 @@ $begin
 	$end
 	}
 $end
+
+$branch pp_type == 8
+$begin
+uniform float chromaticStrength;
+$end
+$branch pp_type == 9
+$begin
+uniform float BWStrength;
+$end
+$branch pp_type == 10
+$begin
+uniform float vignetteStrength;
+uniform float vignetteRadius;
+$end
 void main()
 {
 	$branch pp_type == 0
@@ -275,5 +289,38 @@ void main()
 	$begin
 		oColor = texture0Func(ps_texcoord);
 	$end
+	$branch pp_type == 8
+    $begin
+    vec2 offsetR = vec2(chromaticStrength * 1000.0 / screenwidth, 0.0);
+    vec2 offsetG = vec2(-chromaticStrength * 1000.0 / screenwidth, 0.0);
+    vec2 offsetB = vec2(0.0, chromaticStrength * 1000.0 / screenheight);
+    vec4 colorR = texture0Func(ps_texcoord + offsetR);
+    vec4 colorG = texture0Func(ps_texcoord + offsetG);
+    vec4 colorB = texture0Func(ps_texcoord + offsetB);
+    oColor.r = colorR.r;
+    oColor.g = colorG.g;
+    oColor.b = colorB.b;
+    oColor.a = (colorR.a + colorG.a + colorB.a) / 3.0;
+    $end
+	$branch pp_type == 9
+    $begin
+    vec4 color = texture0Func(ps_texcoord);
+    float luminance = 0.3 * color.r + 0.59 * color.g + 0.11 * color.b;
+    vec4 grayscaleColor = vec4(vec3(luminance), color.a);
+    oColor = mix(color, grayscaleColor, BWStrength);
+    $end
+	$branch pp_type == 10
+    $begin
+    vec4 color = texture0Func(ps_texcoord);
+    vec2 uv = ps_texcoord;
+    $branch rectangle == 1
+    $begin
+    uv = uv / vec2(screenwidth, screenheight);
+    $end
+    vec2 centeredUV = uv - vec2(0.5, 0.5);
+    float distance = length(centeredUV);
+    float vignette = smoothstep(vignetteRadius, vignetteRadius - vignetteStrength, distance);
+    oColor = color * vignette;
+    $end
 }
 $end

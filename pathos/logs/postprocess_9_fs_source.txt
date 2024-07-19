@@ -1,0 +1,23 @@
+#version 130
+uniform sampler2D texture0;
+uniform vec4 color;
+uniform float screenwidth;
+uniform float screenheight;
+
+uniform vec2 offsetdivider;
+
+in vec2 ps_texcoord;
+out vec4 oColor;
+
+vec4 texture0Func( vec2 texcoord )
+{
+return texture(texture0, texcoord);
+}
+void main()
+{
+	// Sample the texture using texture0Func
+    vec4 color = texture0Func(ps_texcoord);
+    float luminance = 0.3 * color.r + 0.59 * color.g + 0.11 * color.b;
+    vec4 grayscaleColor = vec4(vec3(luminance), color.a);
+    oColor = mix(color, grayscaleColor, BWStrength);
+    }

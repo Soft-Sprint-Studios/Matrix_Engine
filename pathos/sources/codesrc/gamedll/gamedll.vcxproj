@@ -168,18 +168,19 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;_64BUILD;NDEBUG;_WINDOWS;_USRDLL;GAMEDLL_EXPORTS;_CRT_SECURE_NO_WARNINGS;GAMEDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_64BUILD;NDEBUG;_WINDOWS;_USRDLL;GAMEDLL_EXPORTS;_CRT_SECURE_NO_WARNINGS;GAMEDLL;%(PreprocessorDefinitions);_HAS_STD_BYTE=0</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\common;..\libs\sdl2.0\include\;..\shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996;4305;4244;4127;4100;4481;4512;4018;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>..\x64\Release\SDL2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\x64\Release\SDL2.lib;%(AdditionalDependencies);..\libs\sdl2.0\lib\SDL2main.lib;..\libs\sdl2.0\lib\SDL2.lib</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy /Y "$(OutDir)$(TargetName)$(TargetExt)" "$(SolutionDir)../../dlls/$(TargetName)$(TargetExt)"</Command>
@@ -227,6 +228,7 @@
     <ClCompile Include="envbeamfollow.cpp" />
     <ClCompile Include="envblackhole.cpp" />
     <ClCompile Include="envdlighttrain.cpp" />
+    <ClCompile Include="envdustpuff.cpp" />
     <ClCompile Include="envearthquake.cpp" />
     <ClCompile Include="envelighttrain.cpp" />
     <ClCompile Include="envlaser.cpp" />
@@ -496,6 +498,7 @@
     <ClInclude Include="envbeamfx.h" />
     <ClInclude Include="envblackhole.h" />
     <ClInclude Include="envdlighttrain.h" />
+    <ClInclude Include="envdustpuff.h" />
     <ClInclude Include="envearthquake.h" />
     <ClInclude Include="envelighttrain.h" />
     <ClInclude Include="envlaser.h" />

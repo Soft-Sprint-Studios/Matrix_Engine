@@ -1,0 +1,2 @@
+D:\sourcesdk\Matrix_Engine\base\sources\codesrc\utils\hlcsg\Release_x64\hlcsg.exe
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlcsg\Release_x64\hlcsg.exe

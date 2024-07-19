@@ -1,0 +1,99 @@
+﻿  blockmem.cpp
+  bspfile.cpp
+  cmdlib.cpp
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\common\cmdlib.cpp(212,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\common\cmdlib.cpp(224,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\common\cmdlib.cpp(238,14): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  cmdlinecfg.cpp
+  filelib.cpp
+  log.cpp
+  mathlib.cpp
+  messages.cpp
+  scriplib.cpp
+  threads.cpp
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\common\threads.cpp(302,13): warning C4311: 'type cast': pointer truncation from 'LPVOID' to 'int'
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\common\threads.cpp(302,13): warning C4302: 'type cast': truncation from 'LPVOID' to 'int'
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\common\threads.cpp(352,48): warning C4312: 'type cast': conversion from 'int' to 'LPVOID' of greater size
+  winding.cpp
+  compress.cpp
+  lerp.cpp
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\lerp.cpp(1081,16): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\lerp.cpp(1092,16): warning C4018: '<': signed/unsigned mismatch
+  lightmap.cpp
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\lightmap.cpp(26,16): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\lightmap.cpp(907,20): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\lightmap.cpp(926,20): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\lightmap.cpp(1131,20): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\lightmap.cpp(1448,22): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\lightmap.cpp(3200,21): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\lightmap.cpp(3568,23): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\lightmap.cpp(3727,11): warning C4101: 'delta': unreferenced local variable
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\lightmap.cpp(4465,21): warning C4101: 'i': unreferenced local variable
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\lightmap.cpp(4825,17): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\lightmap.cpp(5170,25): warning C4101: 'v': unreferenced local variable
+  loadtextures.cpp
+  mathutil.cpp
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\mathutil.cpp(162,16): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\mathutil.cpp(302,19): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\mathutil.cpp(528,23): warning C4018: '<': signed/unsigned mismatch
+  nomatrix.cpp
+  qrad.cpp
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\qrad.cpp(629,21): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\qrad.cpp(680,20): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\qrad.cpp(765,21): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\qrad.cpp(1406,19): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\qrad.cpp(1676,32): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\qrad.cpp(2635,37): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\qrad.cpp(2611,21): warning C4101: 'j': unreferenced local variable
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\qrad.cpp(2610,21): warning C4101: 'i': unreferenced local variable
+  qradutil.cpp
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\qradutil.cpp(217,21): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\qradutil.cpp(222,13): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\qradutil.cpp(655,16): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\qradutil.cpp(663,16): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\qradutil.cpp(690,16): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\qradutil.cpp(900,16): warning C4018: '<': signed/unsigned mismatch
+  sparse.cpp
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\sparse.cpp(44,27): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\sparse.cpp(48,32): warning C4018: '>': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\sparse.cpp(77,26): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\sparse.cpp(82,10): warning C4018: '>=': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\sparse.cpp(109,26): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\sparse.cpp(114,10): warning C4018: '>=': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\sparse.cpp(350,23): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\sparse.cpp(303,21): warning C4101: 'leaf': unreferenced local variable
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\sparse.cpp(300,21): warning C4101: 'lface': unreferenced local variable
+  Compiling...
+  trace.cpp
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\trace.cpp(490,16): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\trace.cpp(492,19): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\trace.cpp(631,16): warning C4018: '<': signed/unsigned mismatch
+  transfers.cpp
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\transfers.cpp(31,28): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\transfers.cpp(40,32): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\transfers.cpp(48,36): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\transfers.cpp(55,32): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\transfers.cpp(64,23): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\transfers.cpp(68,23): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\transfers.cpp(111,24): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\transfers.cpp(124,28): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\transfers.cpp(133,32): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\transfers.cpp(140,28): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\transfers.cpp(149,128): warning C4267: 'argument': conversion from 'size_t' to 'unsigned long', possible loss of data
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\transfers.cpp(151,36): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\transfers.cpp(155,117): warning C4267: 'argument': conversion from 'size_t' to 'unsigned long', possible loss of data
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\transfers.cpp(157,36): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+  transparency.cpp
+  vismatrix.cpp
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\vismatrix.cpp(144,21): warning C4101: 'leaf': unreferenced local variable
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\vismatrix.cpp(141,21): warning C4101: 'lface': unreferenced local variable
+  vismatrixutil.cpp
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\vismatrixutil.cpp(39,27): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\vismatrixutil.cpp(379,23): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\vismatrixutil.cpp(185,21): warning C4101: 'send': unreferenced local variable
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\vismatrixutil.cpp(652,23): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\vismatrixutil.cpp(453,21): warning C4101: 'send': unreferenced local variable
+  blockmem.obj : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
+  Generating code
+  Finished generating code
+  hlrad.vcxproj -> D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlrad\Release_x64\hlrad.exe

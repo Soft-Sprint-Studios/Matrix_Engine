@@ -6,8 +6,9 @@
     <LocalDebuggerCommandArguments>-game pathos -gllog</LocalDebuggerCommandArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerWorkingDirectory>D:\Games\Pathos Engine\</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerWorkingDirectory>..\..\..\..</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <LocalDebuggerCommandArguments>-gllog</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommand>D:\sourcesdk\Matrix_Engine\pathos_x64.exe</LocalDebuggerCommand>
   </PropertyGroup>
 </Project>

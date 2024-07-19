@@ -5,6 +5,7 @@ $global_determinator bumpmapping 0 1
 $global_determinator specular 0 1
 $global_determinator cubemaps 0 2
 $global_determinator luminance 0 1
+$global_determinator ao 0 1
 $global_determinator numlights 0 4
 $global_determinator light0_shadowmap 0 1
 $global_determinator light1_shadowmap 0 1
@@ -251,6 +252,10 @@ $branch luminance == 1
 $begin
 uniform sampler2D luminance;
 $end
+$branch ao == 1
+$begin
+uniform sampler2D aomaptex;
+$end
 
 $branch numlights >= 1
 $begin
@@ -348,6 +353,7 @@ uniform float phong_exponent;
 uniform float specfactor;
 uniform float interpolant;
 uniform float cubemapstrength;
+uniform float cubemapnormal;
 uniform float decalalpha;
 uniform float light_radius;
 
@@ -806,8 +812,7 @@ vec4 AddCubemaps( float reflectivity )
 			vec3 tex_normal = (2.0 * texture2D (normalmap, ps_texcoord).xyz) - 1.0;
 			vec3 eye_texnormal = normalize(tbnMatrix * tex_normal);
 			
-			float normalstrength = 0.025;
-			v_normal = ps_cubenormal * (1.0 - normalstrength) + eye_texnormal * normalstrength;
+			v_normal = ps_cubenormal * (1.0 - cubemapnormal) + eye_texnormal * cubemapnormal;
 		$end
 		$branch bumpmapping == 0
 		$begin
@@ -1100,6 +1105,11 @@ void main()
 		finalColor = texture2D(maintexture, ps_texcoord);
 		finalColor.xyz = (decalalpha * finalColor.xyz) + (1.0 - decalalpha) * vec3(0.5, 0.5, 0.5);
 	$end
+	
+	$branch ao == 1
+	$begin
+	    finalColor.xyz *= texture(aomaptex, ps_texcoord).xyz;
+    $end
 	
 	$branch fogtype != 0
 	$begin

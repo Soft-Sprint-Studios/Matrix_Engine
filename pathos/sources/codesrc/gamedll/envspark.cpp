@@ -21,10 +21,11 @@ LINK_ENTITY_TO_CLASS(env_spark, CEnvSpark);
 // @brief
 //
 //=============================================
-CEnvSpark::CEnvSpark( edict_t* pedict ):
+CEnvSpark::CEnvSpark(edict_t* pedict) :
 	CPointEntity(pedict),
 	m_isActive(false),
-	m_delay(0)
+	m_delay(0),
+	m_soundName(0)
 {
 }
 
@@ -32,7 +33,7 @@ CEnvSpark::CEnvSpark( edict_t* pedict ):
 // @brief
 //
 //=============================================
-CEnvSpark::~CEnvSpark( void )
+CEnvSpark::~CEnvSpark(void)
 {
 }
 
@@ -40,24 +41,30 @@ CEnvSpark::~CEnvSpark( void )
 // @brief
 //
 //=============================================
-void CEnvSpark::DeclareSaveFields( void )
+void CEnvSpark::DeclareSaveFields(void)
 {
 	// Call base class to do it first
 	CPointEntity::DeclareSaveFields();
-	
+
 	DeclareSaveField(DEFINE_DATA_FIELD(CEnvSpark, m_isActive, EFIELD_BOOLEAN));
 	DeclareSaveField(DEFINE_DATA_FIELD(CEnvSpark, m_delay, EFIELD_FLOAT));
+	DeclareSaveField(DEFINE_DATA_FIELD(CEnvSpark, m_soundName, EFIELD_STRING));
 }
 
 //=============================================
 // @brief
 //
 //=============================================
-bool CEnvSpark::KeyValue( const keyvalue_t& kv )
+bool CEnvSpark::KeyValue(const keyvalue_t& kv)
 {
-	if(!qstrcmp(kv.keyname, "MaxDelay"))
+	if (!qstrcmp(kv.keyname, "MaxDelay"))
 	{
 		m_delay = SDL_atof(kv.value);
+		return true;
+	}
+	else if (!qstrcmp(kv.keyname, "sound"))
+	{
+		m_soundName = kv.value;
 		return true;
 	}
 	else
@@ -68,8 +75,11 @@ bool CEnvSpark::KeyValue( const keyvalue_t& kv )
 // @brief
 //
 //=============================================
-void CEnvSpark::Precache( void )
+void CEnvSpark::Precache()
 {
+	if (!m_soundName.empty())
+		gd_engfuncs.pfnPrecacheSound(m_soundName.c_str());
+
 	Util::PrecacheFixedNbSounds("misc/spark%d.wav", 6);
 }
 
@@ -77,21 +87,21 @@ void CEnvSpark::Precache( void )
 // @brief
 //
 //=============================================
-bool CEnvSpark::Spawn( void )
+bool CEnvSpark::Spawn(void)
 {
-	if(!CPointEntity::Spawn())
+	if (!CPointEntity::Spawn())
 		return false;
 
-	if(!HasSpawnFlag(FL_TOGGLE) || HasSpawnFlag(FL_START_ON))
+	if (!HasSpawnFlag(FL_TOGGLE) || HasSpawnFlag(FL_START_ON))
 		m_isActive = true;
 
-	if(m_isActive)
+	if (m_isActive)
 	{
 		SetThink(&CEnvSpark::SparkThink);
 		m_pState->nextthink = g_pGameVars->time + 0.1 + Common::RandomFloat(0, 1.5);
 	}
 
-	if(m_delay <= 0)
+	if (m_delay <= 0)
 		m_delay = DEFAULT_DELAY_TIME;
 
 	return true;
@@ -101,13 +111,16 @@ bool CEnvSpark::Spawn( void )
 // @brief
 //
 //=============================================
-void CEnvSpark::SparkThink( void )
+void CEnvSpark::SparkThink(void)
 {
 	// Spawn spark effect
 	Util::CreateSparks(m_pState->origin);
 
 	CString soundfile;
-	soundfile << "misc/spark" << (Int32)Common::RandomLong(1, 6) << ".wav";
+	if (!m_soundName.empty())
+		soundfile = m_soundName;
+	else
+		soundfile << "misc/spark" << (Int32)Common::RandomLong(1, 6) << ".wav";
 
 	Float volume = Common::RandomFloat(0.1, 0.6);
 	Util::EmitAmbientSound(m_pState->origin, soundfile.c_str(), volume);
@@ -119,10 +132,10 @@ void CEnvSpark::SparkThink( void )
 // @brief
 //
 //=============================================
-void CEnvSpark::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value )
+void CEnvSpark::CallUse(CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value)
 {
 	bool prevstate = m_isActive;
-	switch(useMode)
+	switch (useMode)
 	{
 	case USE_OFF:
 		m_isActive = false;
@@ -136,10 +149,10 @@ void CEnvSpark::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_
 		break;
 	}
 
-	if(prevstate == m_isActive)
+	if (prevstate == m_isActive)
 		return;
 
-	if(!m_isActive)
+	if (!m_isActive)
 	{
 		ClearThinkFunctions();
 	}
@@ -149,4 +162,3 @@ void CEnvSpark::CallUse( CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_
 		m_pState->nextthink = g_pGameVars->time + (0.1 + Common::RandomFloat(0, m_delay));
 	}
 }
-

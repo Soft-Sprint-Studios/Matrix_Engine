@@ -1,0 +1,47 @@
+﻿  blockmem.cpp
+  bspfile.cpp
+  cmdlib.cpp
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\common\cmdlib.cpp(212,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\common\cmdlib.cpp(224,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\common\cmdlib.cpp(238,14): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  cmdlinecfg.cpp
+  filelib.cpp
+  log.cpp
+  mathlib.cpp
+  messages.cpp
+  scriplib.cpp
+  threads.cpp
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\common\threads.cpp(302,13): warning C4311: 'type cast': pointer truncation from 'LPVOID' to 'int'
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\common\threads.cpp(302,13): warning C4302: 'type cast': truncation from 'LPVOID' to 'int'
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\common\threads.cpp(352,48): warning C4312: 'type cast': conversion from 'int' to 'LPVOID' of greater size
+  winding.cpp
+  ansitoutf8.cpp
+  autowad.cpp
+  brush.cpp
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlcsg\brush.cpp(267,21): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlcsg\brush.cpp(281,23): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlcsg\brush.cpp(1324,17): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlcsg\brush.cpp(1347,21): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlcsg\brush.cpp(1382,17): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlcsg\brush.cpp(1437,18): warning C4018: '<': signed/unsigned mismatch
+  brushunion.cpp
+  hullfile.cpp
+  map.cpp
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlcsg\map.cpp(1025,16): warning C4018: '<': signed/unsigned mismatch
+  properties.cpp
+  qcsg.cpp
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlcsg\qcsg.cpp(345,21): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlcsg\qcsg.cpp(479,19): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlcsg\qcsg.cpp(513,27): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlcsg\qcsg.cpp(805,21): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlcsg\qcsg.cpp(1414,27): warning C4101: 'type': unreferenced local variable
+  textures.cpp
+  Compiling...
+  wadcfg.cpp
+  wadinclude.cpp
+  wadpath.cpp
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlcsg\wadpath.cpp(15,17): warning C4101: 'i': unreferenced local variable
+  blockmem.obj : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
+  Generating code
+  Finished generating code
+  hlcsg.vcxproj -> D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlcsg\Release_x64\hlcsg.exe

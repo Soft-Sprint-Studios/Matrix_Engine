@@ -903,6 +903,9 @@
     <ClCompile Include="infovismark.cpp">
       <Filter>Source Files\entities\info</Filter>
     </ClCompile>
+    <ClCompile Include="envdustpuff.cpp">
+      <Filter>Source Files\entities\env</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gamedll.h">
@@ -1693,6 +1696,9 @@
     </ClInclude>
     <ClInclude Include="triggerrelaybinary.h">
       <Filter>Header Files\entities\trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="envdustpuff.h">
+      <Filter>Header Files\entities\env</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

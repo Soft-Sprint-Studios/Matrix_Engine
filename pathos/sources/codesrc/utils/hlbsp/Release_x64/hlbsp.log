@@ -1,0 +1,38 @@
+﻿  blockmem.cpp
+  bspfile.cpp
+  cmdlib.cpp
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\common\cmdlib.cpp(212,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\common\cmdlib.cpp(224,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\common\cmdlib.cpp(238,14): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  cmdlinecfg.cpp
+  filelib.cpp
+  log.cpp
+  mathlib.cpp
+  messages.cpp
+  scriplib.cpp
+  threads.cpp
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\common\threads.cpp(302,13): warning C4311: 'type cast': pointer truncation from 'LPVOID' to 'int'
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\common\threads.cpp(302,13): warning C4302: 'type cast': truncation from 'LPVOID' to 'int'
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\common\threads.cpp(352,48): warning C4312: 'type cast': conversion from 'int' to 'LPVOID' of greater size
+  winding.cpp
+  brink.cpp
+  merge.cpp
+  outside.cpp
+  portals.cpp
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlbsp\portals.cpp(215,31): warning C4018: '<': signed/unsigned mismatch
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlbsp\portals.cpp(229,20): warning C4018: '<': signed/unsigned mismatch
+  qbsp.cpp
+  solidbsp.cpp
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlbsp\solidbsp.cpp(160,37): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlbsp\solidbsp.cpp(399,21): warning C4101: 'j': unreferenced local variable
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlbsp\solidbsp.cpp(521,18): warning C4101: 'p2': unreferenced local variable
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlbsp\solidbsp.cpp(1483,23): warning C4018: '<': signed/unsigned mismatch
+  surfaces.cpp
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlbsp\surfaces.cpp(162,21): warning C4101: 'newsize': unreferenced local variable
+  tjunc.cpp
+D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlbsp\tjunc.cpp(49,21): warning C4101: 'newsize': unreferenced local variable
+  writebsp.cpp
+  blockmem.obj : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
+  Generating code
+  Finished generating code
+  hlbsp.vcxproj -> D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\utils\hlbsp\Release_x64\hlbsp.exe

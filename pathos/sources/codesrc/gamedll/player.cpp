@@ -298,6 +298,17 @@ bool ClientCommand( edict_t* pclient )
 		pClientEntity->SelectPreviousWeapon();
 		return true;
 	}
+	else if (!qstrcmp(pstrCmd, "kill"))
+	{
+		if (!AreCheatsEnabled())
+		{
+			gd_engfuncs.pfnCon_Printf("Cheats not enabled.\n");
+			return true;
+		}
+		CPlayerEntity* pPlayer = reinterpret_cast<CPlayerEntity*>(CBaseEntity::GetClass(pclient));
+		pPlayer->Killed(nullptr, GIB_NEVER, DEATH_NORMAL);
+		return true;
+	}
 	else if(!qstrcmp(pstrCmd, "setdaystage"))
 	{
 		if(!AreCheatsEnabled())

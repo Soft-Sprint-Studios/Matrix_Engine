@@ -85,6 +85,7 @@ CCVar* g_pCvarShadows = nullptr;
 CCVar* g_pCvarGaussianBlur = nullptr;
 CCVar* g_pCvarDynamicLights = nullptr;
 CCVar* g_pCvarStats = nullptr;
+CCVar* g_pCvarclpos = nullptr;
 CCVar* g_pCvarCubemaps = nullptr;
 CCVar* g_pCvarDrawOrigins = nullptr;
 CCVar* g_pCvarAnisotropy = nullptr;
@@ -173,6 +174,7 @@ bool R_Init( void )
 	g_pCvarGaussianBlur = gConsole.CreateCVar( CVAR_FLOAT, (FL_CV_CLIENT|FL_CV_SAVE), "r_gaussianblur", "1", "Toggles the use of gaussian blurring effects" );
 	g_pCvarDynamicLights = gConsole.CreateCVar( CVAR_FLOAT, (FL_CV_CLIENT|FL_CV_SAVE), "r_dynamiclights", "1", "Toggles dynamic light effects" );
 	g_pCvarStats = gConsole.CreateCVar( CVAR_FLOAT, (FL_CV_CLIENT|FL_CV_SAVE), "r_stats", "0", "Toggle render statistics info printing" );
+	g_pCvarclpos = gConsole.CreateCVar(CVAR_FLOAT, (FL_CV_CLIENT | FL_CV_SAVE), "cl_showpos", "0", "Show Position");
 	g_pCvarCubemaps = gConsole.CreateCVar( CVAR_FLOAT, (FL_CV_CLIENT|FL_CV_SAVE), "r_cubemaps", "1", "Toggles cubemap reflections" );
 	g_pCvarDrawOrigins = gConsole.CreateCVar(CVAR_FLOAT, FL_CV_CLIENT, "r_draworigins", "0", "Toggle rendering of origin points");
 	g_pCvarAnisotropy = gConsole.CreateCVar(CVAR_FLOAT, (FL_CV_GL_DEPENDENT|FL_CV_CLIENT|FL_CV_SAVE), ANISOTROPY_CVAR_NAME, "0", "Controls texture anisotropy", R_AnisotropyCvarCallBack);
@@ -2921,6 +2923,39 @@ bool R_PrintCounters( void )
 	
 	return true;
 }
+
+//====================================
+//
+//====================================
+bool R_DrawClPos(void)
+{
+	// Check if the clpos cvar is less than or equal to 0
+	if (g_pCvarclpos->GetValue() <= 0)
+		return true;
+
+	glDepthMask(GL_FALSE);
+	glDisable(GL_DEPTH_TEST);
+
+	char posString[256];
+
+	snprintf(posString, sizeof(posString), "Pos: %.2f, %.2f, %.2f",
+		rns.view.v_origin.x,
+		rns.view.v_origin.y,
+		rns.view.v_origin.z);
+
+	// Draw the position text
+	if (!R_DrawString(color32_t(255, 255, 255, 255), 1650, 15, posString, nullptr))
+	{
+		Sys_ErrorPopup("Shader error: %s.", gText.GetShaderError());
+		return false;
+	}
+
+	glDepthMask(GL_TRUE);
+	glEnable(GL_DEPTH_TEST);
+
+	return true;
+}
+
 
 //====================================
 //

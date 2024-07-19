@@ -176,6 +176,7 @@ bool CBSPRenderer::InitGL( void )
 		if(m_isCubemappingSupported)
 			m_attribs.d_cubemaps = m_pShader->GetDeterminatorIndex("cubemaps");
 		m_attribs.d_luminance = m_pShader->GetDeterminatorIndex("luminance");
+		m_attribs.d_ao = m_pShader->GetDeterminatorIndex("ao");
 		m_attribs.d_numlights = m_pShader->GetDeterminatorIndex("numlights");
 
 		if(!R_CheckShaderDeterminator(m_attribs.d_shadertype, "shadertype", m_pShader, Sys_ErrorPopup)
@@ -184,6 +185,7 @@ bool CBSPRenderer::InitGL( void )
 			|| !R_CheckShaderDeterminator(m_attribs.d_bumpmapping, "bumpmapping", m_pShader, Sys_ErrorPopup)
 			|| !R_CheckShaderDeterminator(m_attribs.d_specular, "specular", m_pShader, Sys_ErrorPopup)
 			|| !R_CheckShaderDeterminator(m_attribs.d_luminance, "luminance", m_pShader, Sys_ErrorPopup)
+			|| !R_CheckShaderDeterminator(m_attribs.d_ao, "ao", m_pShader, Sys_ErrorPopup)
 			|| !R_CheckShaderDeterminator(m_attribs.d_numlights, "numlights", m_pShader, Sys_ErrorPopup))
 			return false;
 
@@ -228,6 +230,7 @@ bool CBSPRenderer::InitGL( void )
 
 		m_attribs.u_uvoffset = m_pShader->InitUniform("uvoffset", CGLSLShader::UNIFORM_FLOAT2);
 		m_attribs.u_phong_exponent = m_pShader->InitUniform("phong_exponent", CGLSLShader::UNIFORM_FLOAT1);
+		m_attribs.u_cubemapnormal = m_pShader->InitUniform("cubemapnormal", CGLSLShader::UNIFORM_FLOAT1);
 		m_attribs.u_specularfactor = m_pShader->InitUniform("specfactor", CGLSLShader::UNIFORM_FLOAT1);
 		
 		if(m_isCubemappingSupported)
@@ -246,6 +249,7 @@ bool CBSPRenderer::InitGL( void )
 		m_attribs.u_chrometex = m_pShader->InitUniform("chrometex", CGLSLShader::UNIFORM_INT1);
 		m_attribs.u_normalmap = m_pShader->InitUniform("normalmap", CGLSLShader::UNIFORM_INT1);
 		m_attribs.u_luminance = m_pShader->InitUniform("luminance", CGLSLShader::UNIFORM_INT1);
+		m_attribs.u_aomap = m_pShader->InitUniform("aomaptex", CGLSLShader::UNIFORM_INT1);
 		m_attribs.u_difflightmap = m_pShader->InitUniform("difflightmap", CGLSLShader::UNIFORM_INT1);
 		m_attribs.u_lightvecstex = m_pShader->InitUniform("lightvecstex", CGLSLShader::UNIFORM_INT1);
 		m_attribs.u_specular = m_pShader->InitUniform("speculartex", CGLSLShader::UNIFORM_INT1);
@@ -1857,6 +1861,7 @@ bool CBSPRenderer::DrawFirst( void )
 				m_pShader->SetUniformMatrix4fv(m_attribs.u_modelmatrix, modelMatrix.GetMatrix());
 				m_pShader->SetUniformMatrix4fv(m_attribs.u_inv_modelmatrix, modelMatrix.GetInverse());
 				m_pShader->SetUniform1f(m_attribs.u_cubemapstrength, pmaterial->cubemapstrength);
+				m_pShader->SetUniform1f(m_attribs.u_cubemapnormal, pmaterial->cubemapnormal);
 			}
 			else if(cubematrixSet)
 			{
@@ -1918,6 +1923,7 @@ bool CBSPRenderer::DrawFirst( void )
 				|| !m_pShader->SetDeterminator(m_attribs.d_specular, FALSE, false)
 				|| !m_pShader->SetDeterminator(m_attribs.d_bumpmapping, FALSE, false)
 				|| !m_pShader->SetDeterminator(m_attribs.d_luminance, FALSE, false)
+				|| !m_pShader->SetDeterminator(m_attribs.d_ao, FALSE, false)
 				|| !m_pShader->SetDeterminator(m_attribs.d_shadertype, shader_solidcolor))
 				return false;
 
@@ -2111,6 +2117,25 @@ bool CBSPRenderer::DrawFirst( void )
 				return false;
 		}
 
+		if (pmaterial->ptextures[MT_TX_AO])
+		{
+			if (!m_pShader->SetDeterminator(m_attribs.d_ao, TRUE))
+				return false;
+
+			en_texture_t* paotexture = pmaterial->ptextures[MT_TX_AO];
+			m_pShader->SetUniform1i(m_attribs.u_aomap, textureIndex);
+			R_Bind2DTexture(GL_TEXTURE0 + textureIndex, paotexture->palloc->gl_index);
+			textureIndex++;
+
+			// We'll need texcoords
+			useTexcoord = true;
+		}
+		else
+		{
+			if (!m_pShader->SetDeterminator(m_attribs.d_ao, FALSE))
+				return false;
+		}
+
 		R_ValidateShader(m_pShader);
 
 		if(useTexcoord)
@@ -2145,6 +2170,7 @@ bool CBSPRenderer::DrawFirst( void )
 	// Make sure to restore these
 	if(!m_pShader->SetDeterminator(m_attribs.d_alphatest, ALPHATEST_DISABLED, false)
 		|| !m_pShader->SetDeterminator(m_attribs.d_bumpmapping, FALSE, false)
+		|| !m_pShader->SetDeterminator(m_attribs.d_ao, FALSE, false)
 		|| !m_pShader->SetDeterminator(m_attribs.d_luminance, FALSE, false))
 		return false;
 
@@ -2398,6 +2424,22 @@ bool CBSPRenderer::BindTextures( bsp_texture_t* phandle, cubemapinfo_t* pcubemap
 	else
 	{
 		if(!m_pShader->SetDeterminator(m_attribs.d_luminance, FALSE, false))
+			return false;
+	}
+
+	if (pmaterial->ptextures[MT_TX_AO])
+	{
+		if (!m_pShader->SetDeterminator(m_attribs.d_ao, TRUE, false))
+			return false;
+
+		en_texture_t* paotexture = pmaterial->ptextures[MT_TX_AO];
+		m_pShader->SetUniform1i(m_attribs.u_aomap, textureIndex);
+		R_Bind2DTexture(GL_TEXTURE0 + textureIndex, paotexture->palloc->gl_index);
+		textureIndex++;
+	}
+	else
+	{
+		if (!m_pShader->SetDeterminator(m_attribs.d_ao, FALSE, false))
 			return false;
 	}
 
@@ -3364,6 +3406,7 @@ bool CBSPRenderer::DrawFinal( void )
 				continue;			
 			
 			m_pShader->SetUniform1f(m_attribs.u_cubemapstrength, pmaterial->cubemapstrength);
+			m_pShader->SetUniform1f(m_attribs.u_cubemapnormal, pmaterial->cubemapnormal);
 
 			// Bind specular texture
 			m_pShader->SetUniform1i(m_attribs.u_specular, texbase);

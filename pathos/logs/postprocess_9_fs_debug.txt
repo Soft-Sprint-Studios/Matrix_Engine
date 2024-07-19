@@ -1,0 +1,1 @@
+0(22) : error C1503: undefined variable "BWStrength"

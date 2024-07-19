@@ -1,0 +1,53 @@
+﻿  cbuffer.cpp
+  common.cpp
+  crc32.cpp
+  cstring.cpp
+  matrix.cpp
+  md5.cpp
+  r_common.cpp
+  decallist.cpp
+  playermove.cpp
+  r_glextf.cpp
+  r_glsl.cpp
+  r_vbo.cpp
+  stepsound.cpp
+  vbm_shared.cpp
+  weapons_shared.cpp
+  animevents.cpp
+  clientdll.cpp
+  cliententities.cpp
+  clientusermsgs.cpp
+  clshared.cpp
+  Compiling...
+  draw.cpp
+  entitymanager.cpp
+  gameuielements.cpp
+  gameuikeypadwindow.cpp
+  gameuiloginwindow.cpp
+  gameuimanager.cpp
+  gameuiobjectiveswindow.cpp
+  gameuisubwaywindow.cpp
+  gameuitextwindow.cpp
+  hud.cpp
+  huddraw.cpp
+  input.cpp
+  ladder.cpp
+  messages.cpp
+  motorbike.cpp
+  nodedebug.cpp
+  saytext.cpp
+  screentext.cpp
+  shake.cpp
+  view.cpp
+  Compiling...
+  viewcontroller.cpp
+  viewmodel.cpp
+     Creating library D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\x64\Release\client_x64.lib and object D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\x64\Release\client_x64.exp
+  Generating code
+  0 of 2357 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  client.vcxproj -> D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\x64\Release\client_x64.dll
+  Copy client_x64.dll to dlls dir
+          1 file(s) copied.
