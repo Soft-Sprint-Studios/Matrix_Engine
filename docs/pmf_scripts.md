@@ -41,6 +41,7 @@ Currently five types of textures are supported:
 			  $cubemaps, $phong_exp, $spec, $cubemapstrength.
  - luminance : This is used for textures that have a self-illumination
                component to them.
+ - ao : This is used for Ambient Occlusion textures, same as PBR   
 
 # Flags and values:
  - $cubemaps : Marks that the texture will use cubemap reflections.
@@ -86,6 +87,7 @@ Currently five types of textures are supported:
 				 use as it's zoomed-in FOV value.
  - $cubemapstrength : Defines the strength of the cubemap effect's
                       reflections, with a value between 0 and 1.
+ - $cubemapnormal : Defines the strength of normal mapping on the cubemap
  - $container : Used by textures stored in WAD3 files, and should
                 specify the name of the WAD3 file.
  - $scrollu : Defines the scroll speed on the U coordinate.
