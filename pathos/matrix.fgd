@@ -770,6 +770,39 @@
     1 : "Start On" : 0
   ]
 ]
+@PointClass base(Targetname) size(-16 -16 -16, 16 16 16) = env_vignette : "Vignette Effect"
+[
+  strength(integer) : "Vignette Strength" : "0"
+  radius(integer) : "Vignette Radius" : "0"
+  spawnflags(flags) = 
+  [
+    1 : "Start On" : 0
+  ]
+]
+@PointClass base(Targetname) size(-16 -16 -16, 16 16 16) = env_chromatic : "Chromatic Aberration Effect"
+[
+  strength(integer) : "Chromatic Aberration Strength" : "0"
+  spawnflags(flags) = 
+  [
+    1 : "Start On" : 0
+  ]
+]
+@PointClass base(Targetname) size(-16 -16 -16, 16 16 16) = env_blackwhite : "Black and White Effect"
+[
+  strength(float) : "Black and White Strength" : "1.0"
+  spawnflags(flags) = 
+  [
+    1 : "Start On" : 0
+  ]
+]
+@PointClass base(Targetname) size(-16 -16 -16, 16 16 16) = env_filmgrain : "FilmGrain Effect"
+[
+  strength(float) : "FilmGrain Strength" : "0.001"
+  spawnflags(flags) = 
+  [
+    1 : "Start On" : 0
+  ]
+]
 @SolidClass base(Targetname, ZHLT) = env_bubbles : "Bubble Volume" 
 [
   density(integer) : "Bubble density" : 2
