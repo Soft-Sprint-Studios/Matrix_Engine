@@ -67,6 +67,7 @@ struct pp_shader_attribs
 	Int32	u_screenwidth;
 	Int32	u_screenheight;
 	Int32	u_timer;
+	Int32	u_grainammount;
 	Int32	u_chromaticStrength;
 	Int32	u_VignetteStrength;
 	Int32	u_VignetteRadius;
@@ -151,6 +152,14 @@ private:
 public:
 	// Toggle motion blur effect message
 	void SetMotionBlur( bool active, Float blurfade, bool override );
+	// Toggle vignette effect message
+	void SetVignette(bool active, Float strength, Float radius);
+	// Toggle filmgrain effect message
+	void SetFilmGrain(bool active, Float strength);
+	// Toggle bw effect message
+	void SetBlackWhite(bool active, Float strength);
+	// Toggle chromatic effect message
+	void SetChromatic(bool active, Float strength);
 	// Reads fade message
 	void SetFade( Uint32 layerindex, Float duration, Float holdtime, Int32 flags, const color24_t& color, byte alpha, Float timeoffset );
 	// Sets gaussian blur
@@ -166,6 +175,14 @@ private:
 	bool			m_gaussianBlurActive;
 	// TRUE if motion blur is active
 	bool			m_motionBlurActive;
+	// TRUE if vignette is active
+	bool			m_vignetteActive;
+	// TRUE if bw is active
+	bool			m_blackwhiteActive;
+	// TRUE if filmgrain is active
+	bool			m_filmGrainActive;
+	// TRUE if chromatic is active
+	bool			m_chromaticActive;
 	// TRUe if need to override motion blur
 	bool			m_blurOverride;
 	
@@ -191,24 +208,18 @@ private:
 	// Pointer to VBO object
 	class CVBO*			m_pVBO;
 
-	// Filmgrain cvar
-	CCVar*			m_pCvarFilmGrain;
-	// Chromatic cvar
-	CCVar* m_pCvarChromatic;
-	// Chromatic strength cvar
-	CCVar* m_pCvarChromaticStrength;
-	// BW cvar
-	CCVar* m_pCvarBW;
-	// BW strength cvar
-	CCVar* m_pCvarBWStrength;
-	// Vignette cvar
-	CCVar* m_pCvarVignette;
-	// Vignette strength cvar
-	CCVar* m_pCvarVignetteStrength;
-	// Vignette Radius cvar
-	CCVar* m_pCvarVignetteRadius;
 	// Postprocess cvar
 	CCVar*			m_pCvarPostProcess;
+	// Vignette strength
+	Float           m_vignetteStrength;
+	// Filmgrain strength
+	Float           m_filmGrainStrength;
+	// bw strength
+	Float           m_blackwhiteStrength;
+	// Vignette radius
+	Float           m_vignetteRadius;
+	// Chromatic strength
+	Float  m_chromaticStrength;
 
 	// Screen RTT
 	rtt_texture_t*	m_pScreenRTT;

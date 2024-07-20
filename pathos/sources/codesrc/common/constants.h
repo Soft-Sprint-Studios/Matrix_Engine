@@ -97,7 +97,7 @@ static constexpr Float STEPTIME_SPRINT = 475.0f;
 static constexpr Int32 MAX_EDICT_LEAFNUMS = 256;
 
 // Max entities on server side(client ones start after this index)
-static constexpr Uint32 MAX_SERVER_ENTITIES = 65535;
+static constexpr Uint32 MAX_SERVER_ENTITIES = 262144;
 // Reserved space mins for client-side identifiers
 static constexpr Uint32 ENTITY_IDENTIFIER_RESERVED_MIN = MAX_SERVER_ENTITIES+1;
 // Reserved space mins for client-side identifiers
@@ -231,7 +231,7 @@ static const Vector NULL_MAXS(-999999999, -999999999, -999999999);
 // env_elight radius multiplier
 static constexpr Float ENV_ELIGHT_RADIUS_MULTIPLIER = 9.5;
 // Max entities on client side(reserved entities start after this + MAX_SERVER_ENTITIES
-static constexpr Uint32 MAX_CLIENTSIDE_ENTITIES = 65535;
+static constexpr Uint32 MAX_CLIENTSIDE_ENTITIES = 262144;
 // Entity index offset for client-side entities
 static constexpr Uint32 CL_ENTITY_INDEX_BASE = MAX_SERVER_ENTITIES;
 
@@ -249,7 +249,7 @@ static constexpr Uint32 REFERENCE_FOV_VALUE = 90;
 static constexpr Int32 DIRECTION_NODIR = -1;
 
 // Max rendered entities
-static constexpr Int32 MAX_RENDER_ENTITIES = 4096;
+static constexpr Int32 MAX_RENDER_ENTITIES = 262144;
 
 // Type for print functions
 typedef void (*pfnPrintf_t)( const Char *fmt, ... );

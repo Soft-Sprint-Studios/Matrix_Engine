@@ -11,41 +11,37 @@
 #define MAX_MAP_HULLS            4
 // hard limit
 
-#define MAX_MAP_MODELS         4096 // arbitrary
+#define MAX_MAP_MODELS         65536 // arbitrary
 // variable, but 400 brush entities is very stressful on the engine and network code as it is
 
 #define MAX_MAP_BRUSHES       262144
 // arbitrary, but large numbers of brushes generally require more lightmap's than the compiler can handle
 
-#define MAX_ENGINE_ENTITIES   65535 // Maximum number of entities managed by the engine
-#define MAX_MAP_ENTITIES      65535 // Maximum number of entities managed by the engine
+#define MAX_ENGINE_ENTITIES   262144 // Maximum number of entities managed by the engine
+#define MAX_MAP_ENTITIES      262144 // Maximum number of entities managed by the engine
 
 #define MAX_MAP_ENTSTRING   (2048*1024) //(512*1024) //vluzacn
 // abitrary, 512Kb of string data should be plenty even with TFC FGD's
 
-#define MAX_MAP_PLANES			262144 // Actual limit is the limit of uint32
-#define MAX_INTERNAL_MAP_PLANES 262144 // Actual limit is the limit of uint32
+#define MAX_MAP_PLANES			1048576 // Actual limit is the limit of uint32
+#define MAX_INTERNAL_MAP_PLANES 1048576 // Actual limit is the limit of uint32
 
-#define MAX_MAP_NODES        262144 // Actual limit is the limit of int32
-#define MAX_MAP_CLIPNODES    262144 // Actual limit is the limit of int32
+#define MAX_MAP_NODES        1048576 // Actual limit is the limit of int32
+#define MAX_MAP_CLIPNODES    1048576 // Actual limit is the limit of int32
 
-#define MAX_MAP_LEAFS        262144 // Limit is arbitrary
-#define MAX_MAP_LEAFS_ENGINE 262144 // Limit is arbitrary
-#define MAX_MAP_VERTS        262144 // Actual limit is the size of uint32
-#define MAX_MAP_FACES        262144 // Actual limit is the size of uint32
-#define MAX_MAP_WORLDFACES   262144
+#define MAX_MAP_LEAFS        1048576 // Limit is arbitrary
+#define MAX_MAP_LEAFS_ENGINE 1048576 // Limit is arbitrary
+#define MAX_MAP_VERTS        1048576 // Actual limit is the size of uint32
+#define MAX_MAP_FACES        1048576 // Actual limit is the size of uint32
+#define MAX_MAP_WORLDFACES   1048576
 
-#define MAX_MAP_MARKSURFACES 262144 // Actual limit is the size of uint32
+#define MAX_MAP_MARKSURFACES 1048576 // Actual limit is the size of uint32
 // hard limit (data structures store them as unsigned shorts)
 
-#define MAX_MAP_TEXTURES      16384 // This limit is arbitrary
+#define MAX_MAP_TEXTURES      1048576 // This limit is arbitrary
 // hard limit (halflife limitation) // I used 2048 different textures in a test map and everything looks fine in both opengl and d3d mode.
 
-#define MAX_MAP_TEXINFO      262144 // Actual limit is limit of int32
-
-#ifdef HLCSG_HLBSP_REDUCETEXTURE
-#define MAX_MAP_TEXINFO 262144
-#endif
+#define MAX_MAP_TEXINFO      1048576 // Actual limit is limit of int32
 
 #define MAX_MAP_EDGES       524288 // Actual limit is the limit of Uint32
 #define MAX_MAP_SURFEDGES   1048576 // Actual limit is the limit of Int32
@@ -79,7 +75,7 @@
 //=============================================================================
 
 #define PBSP_HEADER						(('P'<<24)+('S'<<16)+('B'<<8)+'P')
-#define PBSP_VERSION					1
+#define PBSP_VERSION					2
 
 #define TOOLVERSION 2
 
