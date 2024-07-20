@@ -1,4 +1,4 @@
-﻿  texturemanager.cpp
+﻿  r_bsp.cpp
      Creating library D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\x64\Release\pathos_x64.lib and object D:\sourcesdk\Matrix_Engine\pathos\sources\codesrc\x64\Release\pathos_x64.exp
   Generating code
   Not all modules are compiled with -Gy (function comdat), build without incremental LTCG.

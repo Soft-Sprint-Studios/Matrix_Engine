@@ -561,6 +561,8 @@ mt_texture_t CTextureManager::GetTextureType( const Char* pstrTypename )
 		return MT_TX_LUMINANCE;
 	else if (!qstrcmp(pstrTypename, "ao"))
 		return MT_TX_AO;
+	else if (!qstrcmp(pstrTypename, "height"))
+		return MT_TX_HEIGHT;
 	else
 		return MT_TX_UNKNOWN;
 }
@@ -665,6 +667,8 @@ en_material_t* CTextureManager::LoadMaterialScript( const Char* pstrFilename, rs
 		pmaterial->alpha = 1.0;
 		pmaterial->spec_factor = DEFAULT_SPECFACTOR;
 		pmaterial->phong_exp = DEFAULT_PHONG_EXP;
+		pmaterial->parallaxscale = 0;
+		pmaterial->parallaxlayers = 16;
 		pmaterial->cubemapnormal = 0.15;
 	}
 
@@ -760,6 +764,8 @@ en_material_t* CTextureManager::LoadMaterialScript( const Char* pstrFilename, rs
 					|| !qstrcmp(token, "$int_width") || !qstrcmp(token, "$int_height")
 					|| !qstrcmp(token, "$alpha") || !qstrcmp(token, "$phong_exp")
 				    || !qstrcmp(token, "$alpha") || !qstrcmp(token, "$cubemapnormal")
+				    || !qstrcmp(token, "$alpha") || !qstrcmp(token, "$parallaxscale")
+				    || !qstrcmp(token, "$alpha") || !qstrcmp(token, "$parallaxlayers")
 					|| !qstrcmp(token, "$spec") || !qstrcmp(token, "$scopescale") 
 					|| !qstrcmp(token, "$cubemapstrength") || !qstrcmp(token, "$container")
 					|| !qstrcmp(token, "$scrollu") || !qstrcmp(token, "$scrollv"))
@@ -794,6 +800,10 @@ en_material_t* CTextureManager::LoadMaterialScript( const Char* pstrFilename, rs
 					pmaterial->phong_exp = static_cast<Float>(SDL_atof(value));
 				else if (!qstrcmp(token, "$cubemapnormal"))
 					pmaterial->cubemapnormal = (Float)SDL_atof(value);
+				else if (!qstrcmp(token, "$parallaxscale"))
+					pmaterial->parallaxscale = (Float)SDL_atof(value);
+				else if (!qstrcmp(token, "$parallaxlayers"))
+					pmaterial->parallaxlayers = (Float)SDL_atof(value);
 				else if(!qstrcmp(token, "$spec"))
 					pmaterial->spec_factor = static_cast<Float>(SDL_atof(value));
 				else if(!qstrcmp(token, "$scopescale"))
@@ -1609,6 +1619,12 @@ void CTextureManager::WritePMFFile( en_material_t* pmaterial )
 	if(pmaterial->cubemapstrength)
 		data << "\t$cubemapstrength " << pmaterial->cubemapstrength << NEWLINE;
 
+	if (pmaterial->parallaxscale)
+		data << "\t$parallaxscale " << pmaterial->parallaxscale << NEWLINE;
+
+	if (pmaterial->parallaxlayers)
+		data << "\t$parallaxlayers " << pmaterial->parallaxlayers << NEWLINE;
+
 	// Set container
 	if(!pmaterial->containername.empty())
 		data << "\t$container " << pmaterial->containername << NEWLINE;
@@ -1635,6 +1651,9 @@ void CTextureManager::WritePMFFile( en_material_t* pmaterial )
 
 	if (pmaterial->ptextures[MT_TX_AO])
 		data << "\t$texture ao " << pmaterial->ptextures[MT_TX_AO]->filepath << NEWLINE;
+
+	if (pmaterial->ptextures[MT_TX_HEIGHT])
+		data << "\t$texture height " << pmaterial->ptextures[MT_TX_HEIGHT]->filepath << NEWLINE;
 
 	data << "}" << NEWLINE;
 

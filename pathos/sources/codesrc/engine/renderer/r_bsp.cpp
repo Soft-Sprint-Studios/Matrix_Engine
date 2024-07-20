@@ -177,6 +177,7 @@ bool CBSPRenderer::InitGL( void )
 			m_attribs.d_cubemaps = m_pShader->GetDeterminatorIndex("cubemaps");
 		m_attribs.d_luminance = m_pShader->GetDeterminatorIndex("luminance");
 		m_attribs.d_ao = m_pShader->GetDeterminatorIndex("ao");
+		m_attribs.d_parallax = m_pShader->GetDeterminatorIndex("parallax");
 		m_attribs.d_numlights = m_pShader->GetDeterminatorIndex("numlights");
 
 		if(!R_CheckShaderDeterminator(m_attribs.d_shadertype, "shadertype", m_pShader, Sys_ErrorPopup)
@@ -186,6 +187,7 @@ bool CBSPRenderer::InitGL( void )
 			|| !R_CheckShaderDeterminator(m_attribs.d_specular, "specular", m_pShader, Sys_ErrorPopup)
 			|| !R_CheckShaderDeterminator(m_attribs.d_luminance, "luminance", m_pShader, Sys_ErrorPopup)
 			|| !R_CheckShaderDeterminator(m_attribs.d_ao, "ao", m_pShader, Sys_ErrorPopup)
+			|| !R_CheckShaderDeterminator(m_attribs.d_parallax, "parallax", m_pShader, Sys_ErrorPopup)
 			|| !R_CheckShaderDeterminator(m_attribs.d_numlights, "numlights", m_pShader, Sys_ErrorPopup))
 			return false;
 
@@ -1415,8 +1417,9 @@ bool CBSPRenderer::Prepare( void )
 			return false;
 	}
 
-	if(!m_pShader->SetDeterminator(m_attribs.d_bumpmapping, false, false)
-		|| !m_pShader->SetDeterminator(m_attribs.d_specular, false, false))
+	if (!m_pShader->SetDeterminator(m_attribs.d_bumpmapping, false, false)
+		|| !m_pShader->SetDeterminator(m_attribs.d_specular, false, false)
+		|| !m_pShader->SetDeterminator(m_attribs.d_parallax, false, false))
 		return false;
 
 	if(m_isCubemappingSupported)
@@ -1732,6 +1735,7 @@ bool CBSPRenderer::DrawFirst( void )
 			// Make sure these are disabled
 			if(!m_pShader->SetDeterminator(m_attribs.d_bumpmapping, FALSE, false) ||
 				!m_pShader->SetDeterminator(m_attribs.d_specular, FALSE, false) ||
+				!m_pShader->SetDeterminator(m_attribs.d_parallax, FALSE, false) ||
 				!m_pShader->SetDeterminator(m_attribs.d_shadertype, shader_chrome, false) ||
 				!m_pShader->SetDeterminator(m_attribs.d_cubemaps, CUBEMAPS_OFF, false) ||
 				!m_pShader->SetDeterminator(m_attribs.d_luminance, FALSE, false))
@@ -1842,6 +1846,12 @@ bool CBSPRenderer::DrawFirst( void )
 				m_pShader->SetUniform1f(m_attribs.u_specularfactor, pmaterial->spec_factor);
 			}
 
+			if (pmaterial->ptextures[MT_TX_HEIGHT])
+			{
+				m_pShader->SetUniform1f(m_attribs.u_parallaxscale, pmaterial->parallaxscale);
+				m_pShader->SetUniform1f(m_attribs.u_parallaxlayers, pmaterial->parallaxlayers);
+			}
+
 			// Reset cubemap bind
 			if(m_isCubemappingSupported && pcubemapinfo && g_pCvarCubemaps->GetValue() > 0 && !cubematrixSet)
 			{
@@ -1924,6 +1934,7 @@ bool CBSPRenderer::DrawFirst( void )
 				|| !m_pShader->SetDeterminator(m_attribs.d_bumpmapping, FALSE, false)
 				|| !m_pShader->SetDeterminator(m_attribs.d_luminance, FALSE, false)
 				|| !m_pShader->SetDeterminator(m_attribs.d_ao, FALSE, false)
+				|| !m_pShader->SetDeterminator(m_attribs.d_parallax, FALSE, false)
 				|| !m_pShader->SetDeterminator(m_attribs.d_shadertype, shader_solidcolor))
 				return false;
 
@@ -2136,6 +2147,25 @@ bool CBSPRenderer::DrawFirst( void )
 				return false;
 		}
 
+		if (pmaterial->ptextures[MT_TX_HEIGHT])
+		{
+			if (!m_pShader->SetDeterminator(m_attribs.d_parallax, TRUE))
+				return false;
+
+			en_texture_t* pheighttexture = pmaterial->ptextures[MT_TX_HEIGHT];
+			m_pShader->SetUniform1i(m_attribs.u_heightmap, textureIndex);
+			R_Bind2DTexture(GL_TEXTURE0 + textureIndex, pheighttexture->palloc->gl_index);
+			textureIndex++;
+
+			// We'll need texcoords
+			useTexcoord = true;
+		}
+		else
+		{
+			if (!m_pShader->SetDeterminator(m_attribs.d_parallax, FALSE))
+				return false;
+		}
+
 		R_ValidateShader(m_pShader);
 
 		if(useTexcoord)
@@ -2171,6 +2201,7 @@ bool CBSPRenderer::DrawFirst( void )
 	if(!m_pShader->SetDeterminator(m_attribs.d_alphatest, ALPHATEST_DISABLED, false)
 		|| !m_pShader->SetDeterminator(m_attribs.d_bumpmapping, FALSE, false)
 		|| !m_pShader->SetDeterminator(m_attribs.d_ao, FALSE, false)
+		|| !m_pShader->SetDeterminator(m_attribs.d_parallax, FALSE, false)
 		|| !m_pShader->SetDeterminator(m_attribs.d_luminance, FALSE, false))
 		return false;
 
@@ -2271,7 +2302,8 @@ bool CBSPRenderer::BindTextures( bsp_texture_t* phandle, cubemapinfo_t* pcubemap
 	}
 	else
 	{
-		if(!m_pShader->SetDeterminator(m_attribs.d_bumpmapping, FALSE, false)
+		if (!m_pShader->SetDeterminator(m_attribs.d_bumpmapping, FALSE, false)
+			|| !m_pShader->SetDeterminator(m_attribs.d_parallax, FALSE, false)
 			|| !m_pShader->SetDeterminator(m_attribs.d_specular, FALSE, false))
 			return false;
 		
@@ -2440,6 +2472,22 @@ bool CBSPRenderer::BindTextures( bsp_texture_t* phandle, cubemapinfo_t* pcubemap
 	else
 	{
 		if (!m_pShader->SetDeterminator(m_attribs.d_ao, FALSE, false))
+			return false;
+	}
+
+	if (pmaterial->ptextures[MT_TX_HEIGHT])
+	{
+		if (!m_pShader->SetDeterminator(m_attribs.d_parallax, TRUE, false))
+			return false;
+
+		en_texture_t* pheighttexture = pmaterial->ptextures[MT_TX_HEIGHT];
+		m_pShader->SetUniform1i(m_attribs.u_heightmap, textureIndex);
+		R_Bind2DTexture(GL_TEXTURE0 + textureIndex, pheighttexture->palloc->gl_index);
+		textureIndex++;
+	}
+	else
+	{
+		if (!m_pShader->SetDeterminator(m_attribs.d_parallax, FALSE, false))
 			return false;
 	}
 
@@ -3145,6 +3193,7 @@ bool CBSPRenderer::DrawFinal( void )
 
 	if(!m_pShader->SetDeterminator(m_attribs.d_fogtype, fog_none, false)
 		|| !m_pShader->SetDeterminator(m_attribs.d_bumpmapping, FALSE, false)
+		|| !m_pShader->SetDeterminator(m_attribs.d_parallax, FALSE, false)
 		|| !m_pShader->SetDeterminator(m_attribs.d_specular, FALSE, false))
 		return false;
 
