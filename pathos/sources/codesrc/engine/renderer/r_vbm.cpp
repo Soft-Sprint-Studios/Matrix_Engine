@@ -342,7 +342,7 @@ bool CVBMRenderer::InitGL( void )
 			{
 				CString uniformname;
 				uniformname << "bones[" << static_cast<Int32>(i*3) << "]";
-				m_attribs.boneindexes[i] = m_pShader->InitUniform(uniformname.c_str(), CGLSLShader::UNIFORM_NOSYNC);
+				m_attribs.boneindexes[i] = m_pShader->InitUniform(uniformname.c_str(), CGLSLShader::UNIFORM_NOSYNC, 3);
 				if(!R_CheckShaderUniform(m_attribs.boneindexes[i], uniformname.c_str(), m_pShader, Sys_ErrorPopup))
 					return false;
 			}
@@ -459,6 +459,7 @@ bool CVBMRenderer::InitGL( void )
 		m_attribs.d_flexes = m_pShader->GetDeterminatorIndex("flex");
 		m_attribs.d_specular = m_pShader->GetDeterminatorIndex("specular");
 		m_attribs.d_luminance = m_pShader->GetDeterminatorIndex("luminance");
+		m_attribs.d_ao = m_pShader->GetDeterminatorIndex("ao");
 		m_attribs.d_bumpmapping = m_pShader->GetDeterminatorIndex("bumpmapping");
 		m_attribs.d_numdlights = m_pShader->GetDeterminatorIndex("numdlights");
 		m_attribs.d_use_ubo = m_pShader->GetDeterminatorIndex("use_ubo");
@@ -471,6 +472,7 @@ bool CVBMRenderer::InitGL( void )
 			|| !R_CheckShaderDeterminator(m_attribs.d_flexes, "flex", m_pShader, Sys_ErrorPopup)
 			|| !R_CheckShaderDeterminator(m_attribs.d_specular, "specular", m_pShader, Sys_ErrorPopup)
 			|| !R_CheckShaderDeterminator(m_attribs.d_luminance, "luminance", m_pShader, Sys_ErrorPopup)
+			|| !R_CheckShaderDeterminator(m_attribs.d_ao, "ao", m_pShader, Sys_ErrorPopup)
 			|| !R_CheckShaderDeterminator(m_attribs.d_bumpmapping, "bumpmapping", m_pShader, Sys_ErrorPopup)
 			|| !R_CheckShaderDeterminator(m_attribs.d_use_ubo, "use_ubo", m_pShader, Sys_ErrorPopup)
 			|| !R_CheckShaderDeterminator(m_attribs.d_rectangle, "rectangle", m_pShader, Sys_ErrorPopup))
@@ -3398,7 +3400,7 @@ bool CVBMRenderer::DrawFinal ( void )
 	if(rns.inwater && g_pCvarCaustics->GetValue() >= 1)
 	{
 		const water_settings_t *psettings = gWaterShader.GetActiveSettings();
-		if(psettings->causticscale > 0 && psettings->causticstrength > 0)
+		if(!psettings->cheaprefraction && psettings->causticscale > 0 && psettings->causticstrength > 0)
 		{
 			GLfloat splane[4] = {0.005f*psettings->causticscale, 0.0025f*psettings->causticscale, 0.0, 0.0};
 			GLfloat tplane[4] = {0.0, 0.005f*psettings->causticscale, 0.0025f*psettings->causticscale, 0.0};
@@ -4178,7 +4180,12 @@ void CVBMRenderer::CreateDecal( const Vector& position, const Vector& normal, de
 				for(Uint32 l = 0; l < 3; l++)
 					triverts[l] = &pvertexes[pindexes[pmesh->start_index+k+l]];
 
-				DecalTriangle(pdecal, pdecalmesh, triverts, pboneids, position, normal, pdecal, up, right, curstart, flags, pmaterial);
+				if (!DecalTriangle(pdecal, pdecalmesh, triverts, pboneids, position, normal, pdecal, up, right, curstart, flags, pmaterial))
+				{
+					Con_Printf("%s - Error creating decal '%s' for VBM model '%s'.\n", __FUNCTION__, texptr->name.c_str(), m_pVBMHeader->name);
+					DeleteDecal(pdecal);
+					return;
+				}
 			}
 		}
 	}
@@ -4234,7 +4241,7 @@ void CVBMRenderer::FinalizeDecalMesh( vbmdecal_t* pdecal, vbm_decal_mesh_t* pmes
 //
 //
 //=============================================
-void CVBMRenderer::DecalTriangle( vbmdecal_t* pdecal, vbm_decal_mesh_t*& pmesh, const vbmvertex_t **pverts, const byte *pboneids, const Vector& position, const Vector& normal, vbmdecal_t *decal, const Vector& up, const Vector& right, Uint32& curstart, byte flags, en_material_t* pmaterial )
+bool CVBMRenderer::DecalTriangle( vbmdecal_t* pdecal, vbm_decal_mesh_t*& pmesh, const vbmvertex_t **pverts, const byte *pboneids, const Vector& position, const Vector& normal, vbmdecal_t *decal, const Vector& up, const Vector& right, Uint32& curstart, byte flags, en_material_t* pmaterial )
 {
 	static Vector tmp;
 	static Vector baseverts[3];
@@ -4274,7 +4281,7 @@ void CVBMRenderer::DecalTriangle( vbmdecal_t* pdecal, vbm_decal_mesh_t*& pmesh, 
 		Math::VectorScale(trinormal, -1, trinormal);
 
 		if(Math::DotProduct(normal, trinormal) < 0.01)
-			return;
+			return true;
 	}
 
 	Float texc_orig_x = Math::DotProduct(position, right);
@@ -4288,22 +4295,22 @@ void CVBMRenderer::DecalTriangle( vbmdecal_t* pdecal, vbm_decal_mesh_t*& pmesh, 
 	Math::VectorMA(position, -xsize, right, planepoint);	
 	nv = Decal_ClipPolygon(dverts1, 3, right, planepoint, dverts2);
 	if (nv < 3) 
-		return;
+		return true;
 
 	Math::VectorMA(position, xsize, right, planepoint);
 	nv = Decal_ClipPolygon(dverts2, nv, right*-1, planepoint, dverts1);
 	if (nv < 3) 
-		return;
+		return true;
 
 	Math::VectorMA(position, -ysize, up, planepoint);
 	nv = Decal_ClipPolygon(dverts1, nv, up, planepoint, dverts2);
 	if (nv < 3) 
-		return;
+		return true;
 
 	Math::VectorMA(position, ysize, up, planepoint);
 	nv = Decal_ClipPolygon(dverts2, nv, up*-1, planepoint, dverts1);
 	if (nv < 3)
-		return;
+		return true;
 
 	bool alphatest = pmaterial->flags & TX_FL_ALPHATEST ? true : false;
 	en_texture_t* ptexture = pmaterial->ptextures[MT_TX_DIFFUSE];
@@ -4326,29 +4333,42 @@ void CVBMRenderer::DecalTriangle( vbmdecal_t* pdecal, vbm_decal_mesh_t*& pmesh, 
 			pmesh->ptexture = ptexture;
 	}
 
+	Uint32 numadd = 0;
+	byte addbones[MAX_VBM_BONEWEIGHTS];
+	for (Uint32 i = 0; i < 3; i++)
+	{
+		for (Uint32 j = 0; j < MAX_VBM_BONEWEIGHTS; j++)
+		{
+			if (!pverts[i]->boneweights[j])
+				continue;
+
+			byte boneindex = pboneids[static_cast<byte>(pverts[i]->boneindexes[j] / 3)];
+
+			Int32 k = 0;
+			for (; k < pmesh->numbones; k++)
+			{
+				if (pmesh->pbones[k] == boneindex)
+					break;
+			}
+
+			Int32 l = 0;
+			for (; l < numadd; l++)
+			{
+				if (boneindex == addbones[l])
+					break;
+			}
+
+			if (k == pmesh->numbones && (Uint32)l == numadd)
+			{
+				addbones[numadd] = boneindex;
+				numadd++;
+			}
+		}
+	}
+
 	// Determine how many new bones we'll have
 	if(pmesh->numbones)
 	{
-		Uint32 numadd = 0;
-		for(Uint32 i = 0; i < 3; i++)
-		{
-			for(Uint32 j = 0; j < MAX_VBM_BONEWEIGHTS; j++)
-			{
-				if(!pverts[i]->boneweights[j])
-					continue;
-
-				Int32 k = 0;
-				for(; k < pmesh->numbones; k++)
-				{
-					if(pmesh->pbones[k] == pverts[i]->boneindexes[j])
-						break;
-				}
-
-				if(k == pmesh->numbones)
-					numadd++;
-			}
-		}
-
 		// If we went over the limit of bones, create a new mesh
 		if((pmesh->numbones + numadd) > MAX_SHADER_BONES) 
 		{
@@ -4359,6 +4379,19 @@ void CVBMRenderer::DecalTriangle( vbmdecal_t* pdecal, vbm_decal_mesh_t*& pmesh, 
 			pmesh = new vbm_decal_mesh_t;
 			pdecal->meshes.push_back(pmesh);
 		}
+	}
+
+	// Add it if it's not
+	assert(pmesh->numbones + numadd < MAX_SHADER_BONES);
+	if (numadd > 0)
+	{
+		void* pnewbuffer = Common::ResizeArray(pmesh->pbones, sizeof(byte), pmesh->numbones, numadd);
+		pmesh->pbones = static_cast<byte*>(pnewbuffer);
+
+		for (Uint32 j = 0; j < numadd; j++)
+			pmesh->pbones[pmesh->numbones+j] = addbones[j];
+
+		pmesh->numbones += numadd;
 	}
 
 	// Cutting is just for exclusion testing, we use the original triangle otherwise
@@ -4376,8 +4409,8 @@ void CVBMRenderer::DecalTriangle( vbmdecal_t* pdecal, vbm_decal_mesh_t*& pmesh, 
 					if(!pverts[i]->boneweights[k])
 						continue;
 
-					byte boneidx1 = pboneids[static_cast<Uint32>(pverts[i]->boneindexes[k]/3)];
-					byte boneidx2 = pmesh->pbones[static_cast<Uint32>(m_tempVertexes[j].boneindexes[k]/3)];
+					byte boneidx1 = pboneids[static_cast<byte>(pverts[i]->boneindexes[k]/3)];
+					byte boneidx2 = pmesh->pbones[static_cast<byte>(m_tempVertexes[j].boneindexes[k]/3)];
 
 					if(boneidx1 != boneidx2)
 						break;
@@ -4395,9 +4428,9 @@ void CVBMRenderer::DecalTriangle( vbmdecal_t* pdecal, vbm_decal_mesh_t*& pmesh, 
 		if(j == m_numTempVertexes)
 		{
 			// Add the bones to the mesh
-			for(Uint32 k = 0; k < MAX_VBM_BONEWEIGHTS; k++)
+			for (Uint32 k = 0; k < MAX_VBM_BONEWEIGHTS; k++)
 			{
-				if(!pverts[i]->boneweights[k])
+				if (!pverts[i]->boneweights[k])
 				{
 					m_tempVertexes[m_numTempVertexes].boneindexes[k] = 0;
 					m_tempVertexes[m_numTempVertexes].boneweights[k] = 0;
@@ -4405,29 +4438,23 @@ void CVBMRenderer::DecalTriangle( vbmdecal_t* pdecal, vbm_decal_mesh_t*& pmesh, 
 				}
 
 				// See if it's present already
+				byte boneindex = pboneids[static_cast<byte>(pverts[i]->boneindexes[k] / 3)];
+
 				Int32 l = 0;
-				byte boneindex = pboneids[static_cast<Uint32>(pverts[i]->boneindexes[k]/3)];
-				for(; l < pmesh->numbones; l++)
+				for (; l < pmesh->numbones; l++)
 				{
-					if(pmesh->pbones[l] == boneindex)
-					{
-						m_tempVertexes[m_numTempVertexes].boneweights[k] = pverts[i]->boneweights[k];
-						m_tempVertexes[m_numTempVertexes].boneindexes[k] = (l*3);
+					if (pmesh->pbones[l] == boneindex)
 						break;
-					}
 				}
 
-				// Add it if it's not
-				if(l == pmesh->numbones)
+				if (l == pmesh->numbones)
 				{
-					void* pnewbuffer = Common::ResizeArray(pmesh->pbones, sizeof(byte), pmesh->numbones);
-					pmesh->pbones = static_cast<byte *>(pnewbuffer);
-					pmesh->pbones[pmesh->numbones] = boneindex; 
-			
-					m_tempVertexes[m_numTempVertexes].boneweights[k] = pverts[i]->boneweights[k];
-					m_tempVertexes[m_numTempVertexes].boneindexes[k] = (pmesh->numbones*3);
-					pmesh->numbones++;
+					Con_EPrintf("%s - Could not find bone in mesh bone list generated.\n", __FUNCTION__);
+					return false;
 				}
+
+				m_tempVertexes[m_numTempVertexes].boneweights[k] = pverts[i]->boneweights[k];
+				m_tempVertexes[m_numTempVertexes].boneindexes[k] = (l * 3);
 			}
 
 			// Calculate texcoords
@@ -4462,6 +4489,17 @@ void CVBMRenderer::DecalTriangle( vbmdecal_t* pdecal, vbm_decal_mesh_t*& pmesh, 
 		m_tempIndexes[m_numTempIndexes] = j;
 		m_numTempIndexes++;
 	}
+
+	if (pmesh->numbones <= MAX_SHADER_BONES)
+	{
+		return true;
+	}
+	else
+	{
+		Con_EPrintf("%s - Exceeded MAX_SHADER_BONES on mesh.\n", __FUNCTION__);
+		return false;
+	}
+
 }
 
 //=============================================
