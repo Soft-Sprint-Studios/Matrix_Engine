@@ -820,7 +820,7 @@
 	spritewidth(integer) : "Width" : 5
 	segments(integer) : "Segments" : 30
 ]
-@PointClass base(Targetname) size(-16 -16 -16, 16 16 16) = env_cubemap : "Cubemap"
+@PointClass base(Targetname) iconsprite("sprites/env_cubemap.spr") size(-16 -16 -16, 16 16 16) = env_cubemap : "Cubemap"
 [
   size(Choices) : "Size" : 3 =
   [ 
