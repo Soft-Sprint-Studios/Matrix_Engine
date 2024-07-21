@@ -2,6 +2,10 @@
 *.psf
 *.bsd
 *.bsd
+*.obj
+*.pdb
+*.ipch
+*.vsidx
 pathos/sources/codesrc/engine/Release/pathos_x86.Build.CppClean.log
 /pathos/sources/codesrc/engine/Release
 /pathos/sources/codesrc/engine/Debug

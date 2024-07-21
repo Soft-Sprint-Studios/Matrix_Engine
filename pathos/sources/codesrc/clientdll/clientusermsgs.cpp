@@ -1695,6 +1695,112 @@ MSGFN MsgFunc_MotionBlur( const Char* pstrName, const byte* pdata, Uint32 msgsiz
 // @brief
 //
 //=============================================
+MSGFN MsgFunc_Vignette(const Char* pstrName, const byte* pdata, Uint32 msgsize)
+{
+	CMSGReader reader(pdata, msgsize);
+
+	bool isOn = (reader.ReadByte() == 1) ? true : false;
+	Float vignetteStrength = 0.0f;
+	Float vignetteRadius = 0.0f;
+	if (isOn)
+	{
+		vignetteStrength = reader.ReadFloat();
+		vignetteRadius = reader.ReadFloat();
+	}
+
+	if (reader.HasError())
+	{
+		cl_engfuncs.pfnCon_Printf("%s - Error reading message: %s.\n", __FUNCTION__, reader.GetError());
+		return false;
+	}
+
+	cl_efxapi.pfnSetVignette(isOn, vignetteStrength, vignetteRadius);
+
+	return true;
+}
+
+//=============================================
+// @brief
+//
+//=============================================
+MSGFN MsgFunc_FilmGrain(const Char* pstrName, const byte* pdata, Uint32 msgsize)
+{
+	CMSGReader reader(pdata, msgsize);
+
+	bool isOn = (reader.ReadByte() == 1) ? true : false;
+	Float grainStrength = 0.0f;
+	if (isOn)
+	{
+		grainStrength = reader.ReadFloat();
+	}
+
+	if (reader.HasError())
+	{
+		cl_engfuncs.pfnCon_Printf("%s - Error reading message: %s.\n", __FUNCTION__, reader.GetError());
+		return false;
+	}
+
+	cl_efxapi.pfnSetFilmGrain(isOn, grainStrength);
+
+	return true;
+}
+
+//=============================================
+// @brief
+//
+//=============================================
+MSGFN MsgFunc_BlackWhite(const Char* pstrName, const byte* pdata, Uint32 msgsize)
+{
+	CMSGReader reader(pdata, msgsize);
+
+	bool isOn = (reader.ReadByte() == 1) ? true : false;
+	Float blackwhiteStrength = 0.0f;
+	if (isOn)
+	{
+		blackwhiteStrength = reader.ReadFloat();
+	}
+
+	if (reader.HasError())
+	{
+		cl_engfuncs.pfnCon_Printf("%s - Error reading message: %s.\n", __FUNCTION__, reader.GetError());
+		return false;
+	}
+
+	cl_efxapi.pfnSetBlackWhite(isOn, blackwhiteStrength);
+
+	return true;
+}
+
+//=============================================
+// @brief
+//
+//=============================================
+MSGFN MsgFunc_Chromatic(const Char* pstrName, const byte* pdata, Uint32 msgsize)
+{
+	CMSGReader reader(pdata, msgsize);
+
+	bool isOn = (reader.ReadByte() == 1) ? true : false;
+	Float chromaticStrength = 0.0f;
+	if (isOn)
+	{
+		chromaticStrength = reader.ReadFloat();
+	}
+
+	if (reader.HasError())
+	{
+		cl_engfuncs.pfnCon_Printf("%s - Error reading message: %s.\n", __FUNCTION__, reader.GetError());
+		return false;
+	}
+
+	cl_efxapi.pfnSetChromatic(isOn, chromaticStrength);
+
+	return true;
+}
+
+//=============================================
+// @brief
+//
+//=============================================
 MSGFN MsgFunc_ShowMessage( const Char* pstrName, const byte* pdata, Uint32 msgsize )
 {
 	CMSGReader reader(pdata, msgsize);
