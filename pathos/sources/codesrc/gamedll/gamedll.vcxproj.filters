@@ -906,6 +906,18 @@
     <ClCompile Include="envdustpuff.cpp">
       <Filter>Source Files\entities\env</Filter>
     </ClCompile>
+    <ClCompile Include="envvignette.cpp">
+      <Filter>Source Files\entities\env</Filter>
+    </ClCompile>
+    <ClCompile Include="envchromatic.cpp">
+      <Filter>Source Files\entities\env</Filter>
+    </ClCompile>
+    <ClCompile Include="envblackwhite.cpp">
+      <Filter>Source Files\entities\env</Filter>
+    </ClCompile>
+    <ClCompile Include="envfilmgrain.cpp">
+      <Filter>Source Files\entities\env</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gamedll.h">
@@ -1698,6 +1710,18 @@
       <Filter>Header Files\entities\trigger</Filter>
     </ClInclude>
     <ClInclude Include="envdustpuff.h">
+      <Filter>Header Files\entities\env</Filter>
+    </ClInclude>
+    <ClInclude Include="envvignette.h">
+      <Filter>Header Files\entities\env</Filter>
+    </ClInclude>
+    <ClInclude Include="envchromatic.h">
+      <Filter>Header Files\entities\env</Filter>
+    </ClInclude>
+    <ClInclude Include="envblackwhite.h">
+      <Filter>Header Files\entities\env</Filter>
+    </ClInclude>
+    <ClInclude Include="envfilmgrain.h">
       <Filter>Header Files\entities\env</Filter>
     </ClInclude>
   </ItemGroup>
