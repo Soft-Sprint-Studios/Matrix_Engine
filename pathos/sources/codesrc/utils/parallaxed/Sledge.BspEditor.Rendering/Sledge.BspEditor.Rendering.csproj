@@ -99,6 +99,9 @@
     <Content Include="Sprites\lightbulb.spr">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+	  <Content Include="Sprites\env_cubemap.spr">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Sprites\speaker.spr">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
