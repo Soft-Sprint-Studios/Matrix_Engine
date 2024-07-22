@@ -64,7 +64,7 @@
 			PP.Size = new System.Drawing.Size(82, 19);
 			PP.TabIndex = 11;
 			PP.Text = "Ping-pong";
-			PP.UseVisualStyleBackColor = false;
+			PP.UseVisualStyleBackColor = true;
 			// 
 			// Circular
 			// 
@@ -75,7 +75,7 @@
 			Circular.Size = new System.Drawing.Size(66, 19);
 			Circular.TabIndex = 10;
 			Circular.Text = "Circular";
-			Circular.UseVisualStyleBackColor = false;
+			Circular.UseVisualStyleBackColor = true;
 			// 
 			// OneWay
 			// 
@@ -88,7 +88,7 @@
 			OneWay.TabIndex = 9;
 			OneWay.TabStop = true;
 			OneWay.Text = "One way";
-			OneWay.UseVisualStyleBackColor = false;
+			OneWay.UseVisualStyleBackColor = true;
 			// 
 			// OKButton
 			// 
@@ -99,7 +99,7 @@
 			OKButton.Size = new System.Drawing.Size(88, 27);
 			OKButton.TabIndex = 13;
 			OKButton.Text = "OK";
-			OKButton.UseVisualStyleBackColor = false;
+			OKButton.UseVisualStyleBackColor = true;
 			OKButton.Click += OkClicked;
 			// 
 			// label1
@@ -146,7 +146,7 @@
 			CancelButton.Size = new System.Drawing.Size(88, 27);
 			CancelButton.TabIndex = 14;
 			CancelButton.Text = "Cancel";
-			CancelButton.UseVisualStyleBackColor = false;
+			CancelButton.UseVisualStyleBackColor = true;
 			CancelButton.Click += CancelClicked;
 			// 
 			// PathProperties

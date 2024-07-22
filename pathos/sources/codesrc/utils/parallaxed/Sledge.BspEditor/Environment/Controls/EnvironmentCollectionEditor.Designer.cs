@@ -63,7 +63,7 @@
 			btnRemove.Size = new System.Drawing.Size(58, 27);
 			btnRemove.TabIndex = 1;
 			btnRemove.Text = "Remove";
-			btnRemove.UseVisualStyleBackColor = false;
+			btnRemove.UseVisualStyleBackColor = true;
 			btnRemove.Click += RemoveEnvironment;
 			// 
 			// pnlSettings
@@ -86,7 +86,7 @@
 			btnAdd.Size = new System.Drawing.Size(58, 27);
 			btnAdd.TabIndex = 3;
 			btnAdd.Text = "Add";
-			btnAdd.UseVisualStyleBackColor = false;
+			btnAdd.UseVisualStyleBackColor = true;
 			// 
 			// ctxEnvironmentMenu
 			// 
@@ -111,7 +111,7 @@
 			importBtn.Size = new System.Drawing.Size(60, 27);
 			importBtn.TabIndex = 4;
 			importBtn.Text = "Import";
-			importBtn.UseVisualStyleBackColor = false;
+			importBtn.UseVisualStyleBackColor = true;
 			// 
 			// ctxImportMenu
 			// 

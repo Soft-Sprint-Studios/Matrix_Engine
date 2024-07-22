@@ -94,7 +94,7 @@
             Triggershow.Size = new System.Drawing.Size(98, 19);
             Triggershow.TabIndex = 11;
             Triggershow.Text = "Show triggers";
-            Triggershow.UseVisualStyleBackColor = false;
+            Triggershow.UseVisualStyleBackColor = true;
             Triggershow.CheckedChanged += TriggerShowChanged;
             // 
             // SortDescendingCheckbox
@@ -107,7 +107,7 @@
             SortDescendingCheckbox.Size = new System.Drawing.Size(111, 19);
             SortDescendingCheckbox.TabIndex = 10;
             SortDescendingCheckbox.Text = "Sort descending";
-            SortDescendingCheckbox.UseVisualStyleBackColor = false;
+            SortDescendingCheckbox.UseVisualStyleBackColor = true;
             SortDescendingCheckbox.CheckedChanged += SortDescendingCheckboxChanged;
             // 
             // SortOrderCombo
@@ -174,7 +174,7 @@
             UsedTexturesOnlyBox.Size = new System.Drawing.Size(123, 19);
             UsedTexturesOnlyBox.TabIndex = 4;
             UsedTexturesOnlyBox.Text = "Used textures only";
-            UsedTexturesOnlyBox.UseVisualStyleBackColor = false;
+            UsedTexturesOnlyBox.UseVisualStyleBackColor = true;
             UsedTexturesOnlyBox.CheckedChanged += UsedTexturesOnlyChanged;
             // 
             // SizeLabel
@@ -248,7 +248,7 @@
             DeleteFavouriteFolderButton.Size = new System.Drawing.Size(128, 27);
             DeleteFavouriteFolderButton.TabIndex = 3;
             DeleteFavouriteFolderButton.Text = "Delete Folder";
-            DeleteFavouriteFolderButton.UseVisualStyleBackColor = false;
+            DeleteFavouriteFolderButton.UseVisualStyleBackColor = true;
             DeleteFavouriteFolderButton.Click += DeleteFavouriteFolderButtonClicked;
             // 
             // RemoveFavouriteItemButton
@@ -261,7 +261,7 @@
             RemoveFavouriteItemButton.Size = new System.Drawing.Size(257, 27);
             RemoveFavouriteItemButton.TabIndex = 3;
             RemoveFavouriteItemButton.Text = "Remove Selection From Folder";
-            RemoveFavouriteItemButton.UseVisualStyleBackColor = false;
+            RemoveFavouriteItemButton.UseVisualStyleBackColor = true;
             RemoveFavouriteItemButton.Click += RemoveFavouriteItemButtonClicked;
             // 
             // AddFavouriteFolderButton
@@ -274,7 +274,7 @@
             AddFavouriteFolderButton.Size = new System.Drawing.Size(128, 27);
             AddFavouriteFolderButton.TabIndex = 3;
             AddFavouriteFolderButton.Text = "Add Folder";
-            AddFavouriteFolderButton.UseVisualStyleBackColor = false;
+            AddFavouriteFolderButton.UseVisualStyleBackColor = true;
             AddFavouriteFolderButton.Click += AddFavouriteFolderButtonClicked;
             // 
             // FavouriteTexturesLabel

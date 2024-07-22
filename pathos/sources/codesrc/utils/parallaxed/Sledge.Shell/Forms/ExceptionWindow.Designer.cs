@@ -144,7 +144,7 @@
             CancelButton.Size = new System.Drawing.Size(141, 27);
             CancelButton.TabIndex = 4;
             CancelButton.Text = "Exit";
-            CancelButton.UseVisualStyleBackColor = false;
+            CancelButton.UseVisualStyleBackColor = true;
             CancelButton.Click += CancelButtonClicked;
             // 
             // label3

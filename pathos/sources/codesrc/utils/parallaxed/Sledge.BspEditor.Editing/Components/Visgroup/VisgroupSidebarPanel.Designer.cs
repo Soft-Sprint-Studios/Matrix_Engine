@@ -44,7 +44,7 @@
             this.btnShowAll.TabIndex = 5;
             this.btnShowAll.Tag = "ShowAll";
             this.btnShowAll.Text = "Show All";
-            this.btnShowAll.UseVisualStyleBackColor = false;
+            this.btnShowAll.UseVisualStyleBackColor = true;
             this.btnShowAll.Click += new System.EventHandler(this.ShowAllButtonClicked);
             // 
             // btnSelect
@@ -56,7 +56,7 @@
             this.btnSelect.TabIndex = 6;
             this.btnSelect.Tag = "Select";
             this.btnSelect.Text = "Select";
-            this.btnSelect.UseVisualStyleBackColor = false;
+            this.btnSelect.UseVisualStyleBackColor = true;
             this.btnSelect.Click += new System.EventHandler(this.SelectButtonClicked);
             // 
             // btnEdit
@@ -68,7 +68,7 @@
             this.btnEdit.TabIndex = 7;
             this.btnEdit.Tag = "Edit";
             this.btnEdit.Text = "Edit";
-            this.btnEdit.UseVisualStyleBackColor = false;
+            this.btnEdit.UseVisualStyleBackColor = true;
             this.btnEdit.Click += new System.EventHandler(this.EditButtonClicked);
             // 
             // VisgroupPanel
@@ -94,7 +94,7 @@
             this.btnNew.TabIndex = 9;
             this.btnNew.Tag = "New";
             this.btnNew.Text = "New";
-            this.btnNew.UseVisualStyleBackColor = false;
+            this.btnNew.UseVisualStyleBackColor = true;
             this.btnNew.Click += new System.EventHandler(this.NewButtonClicked);
             // 
             // VisgroupSidebarPanel

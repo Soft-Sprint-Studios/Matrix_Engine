@@ -514,9 +514,29 @@ namespace Sledge.BspEditor.Environment.Goldsource
 				Path = $"{AutoVisgroupPrefix}.ToolBrushes",
 				Key = $"{AutoVisgroupPrefix}.Trigger"
 			};
+            yield return new AutomaticVisgroup(x => x is Solid s && s.Faces.Any(f => string.Equals(f.Texture.Name, "portal", StringComparison.InvariantCultureIgnoreCase)))
+            {
+                Path = $"{AutoVisgroupPrefix}.ToolBrushes",
+                Key = $"{AutoVisgroupPrefix}.portal"
+            };
+            yield return new AutomaticVisgroup(x => x is Solid s && s.Faces.Any(f => string.Equals(f.Texture.Name, "clip", StringComparison.InvariantCultureIgnoreCase)))
+            {
+                Path = $"{AutoVisgroupPrefix}.ToolBrushes",
+                Key = $"{AutoVisgroupPrefix}.clip"
+            };
+            yield return new AutomaticVisgroup(x => x is Solid s && s.Faces.Any(f => string.Equals(f.Texture.Name, "monitor", StringComparison.InvariantCultureIgnoreCase)))
+            {
+                Path = $"{AutoVisgroupPrefix}.ToolBrushes",
+                Key = $"{AutoVisgroupPrefix}.monitor"
+            };
+            yield return new AutomaticVisgroup(x => x is Solid s && s.Faces.Any(f => string.Equals(f.Texture.Name, "solidhint", StringComparison.InvariantCultureIgnoreCase)))
+            {
+                Path = $"{AutoVisgroupPrefix}.ToolBrushes",
+                Key = $"{AutoVisgroupPrefix}.solidhint"
+            };
 
-			// World geometry
-			yield return new AutomaticVisgroup(x => x is Solid s && s.FindClosestParent(p => p is Entity) == null)
+            // World geometry
+            yield return new AutomaticVisgroup(x => x is Solid s && s.FindClosestParent(p => p is Entity) == null)
 			{
 				Path = $"{AutoVisgroupPrefix}.WorldGeometry",
 				Key = $"{AutoVisgroupPrefix}.Brushes"

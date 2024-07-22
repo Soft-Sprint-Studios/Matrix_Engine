@@ -112,28 +112,32 @@
             }
         },
         "Goldsource": {
-            "AutomaticVisgroups": {
-                "Entities": "Entities",
-                "ToolBrushes": "Tool brushes",
-                "WorldGeometry": "World geometry",
+          "AutomaticVisgroups": {
+            "Entities": "Entities",
+            "ToolBrushes": "Tool brushes",
+            "WorldGeometry": "World geometry",
 
-                "BrushEntities": "Brush entities",
-                "PointEntities": "Point entities",
-                "Lights": "Lights",
-                "Triggers": "Triggers",
-                "Nodes": "Nodes",
+            "BrushEntities": "Brush entities",
+            "PointEntities": "Point entities",
+            "Lights": "Lights",
+            "Triggers": "Triggers",
+            "Nodes": "Nodes",
 
-                "Bevel": "Bevel",
-                "Hint": "Hint",
-                "Origin": "Origin",
-                "Skip": "Skip",
-                "Trigger": "Trigger",
+            "Bevel": "Bevel",
+            "Hint": "Hint",
+            "Origin": "Origin",
+            "Skip": "Skip",
+            "Trigger": "Trigger",
+            "portal": "Portals",
+            "clip": "Clip",
+            "monitor": "Monitors",
+            "solidhint": "Solid Hints",
 
-                "Brushes": "Brushes",
-                "Null": "Null",
-                "Sky": "Sky",
-                "Water": "Water"
-            },
+            "Brushes": "Brushes",
+            "Null": "Null",
+            "Sky": "Sky",
+            "Water": "Water"
+          },
           "GoldsourceEnvironmentFactory": {
             "Description": "Matrix Engine"
           },

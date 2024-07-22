@@ -184,7 +184,7 @@ namespace Sledge.Shell.Forms
 			this.tabPage1.Size = new System.Drawing.Size(659, 66);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "tabPage1";
-			this.tabPage1.UseVisualStyleBackColor = false;
+			this.tabPage1.UseVisualStyleBackColor = true;
 			// 
 			// tabPage2
 			// 
@@ -194,7 +194,7 @@ namespace Sledge.Shell.Forms
 			this.tabPage2.Size = new System.Drawing.Size(659, 66);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "tabPage2";
-			this.tabPage2.UseVisualStyleBackColor = false;
+			this.tabPage2.UseVisualStyleBackColor = true;
 			// 
 			// ToolsContainer
 			// 

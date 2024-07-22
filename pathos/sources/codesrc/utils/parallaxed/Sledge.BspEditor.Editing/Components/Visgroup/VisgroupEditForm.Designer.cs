@@ -100,7 +100,7 @@
             this.CancelButton.Size = new System.Drawing.Size(75, 23);
             this.CancelButton.TabIndex = 5;
             this.CancelButton.Text = "Cancel";
-            this.CancelButton.UseVisualStyleBackColor = false;
+            this.CancelButton.UseVisualStyleBackColor = true;
             this.CancelButton.Click += new System.EventHandler(this.CloseButtonClicked);
             // 
             // AddButton
@@ -111,7 +111,7 @@
             this.AddButton.Size = new System.Drawing.Size(95, 23);
             this.AddButton.TabIndex = 5;
             this.AddButton.Text = "Add Group";
-            this.AddButton.UseVisualStyleBackColor = false;
+            this.AddButton.UseVisualStyleBackColor = true;
             this.AddButton.Click += new System.EventHandler(this.AddGroup);
             // 
             // RemoveButton
@@ -123,7 +123,7 @@
             this.RemoveButton.Size = new System.Drawing.Size(95, 23);
             this.RemoveButton.TabIndex = 5;
             this.RemoveButton.Text = "Remove Group";
-            this.RemoveButton.UseVisualStyleBackColor = false;
+            this.RemoveButton.UseVisualStyleBackColor = true;
             this.RemoveButton.Click += new System.EventHandler(this.RemoveGroup);
             // 
             // OkButton
@@ -135,7 +135,7 @@
             this.OkButton.Size = new System.Drawing.Size(75, 23);
             this.OkButton.TabIndex = 5;
             this.OkButton.Text = "OK";
-            this.OkButton.UseVisualStyleBackColor = false;
+            this.OkButton.UseVisualStyleBackColor = true;
             this.OkButton.Click += new System.EventHandler(this.CloseButtonClicked);
             // 
             // VisgroupEditForm
