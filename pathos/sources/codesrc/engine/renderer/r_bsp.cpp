@@ -232,6 +232,8 @@ bool CBSPRenderer::InitGL( void )
 
 		m_attribs.u_uvoffset = m_pShader->InitUniform("uvoffset", CGLSLShader::UNIFORM_FLOAT2);
 		m_attribs.u_phong_exponent = m_pShader->InitUniform("phong_exponent", CGLSLShader::UNIFORM_FLOAT1);
+		m_attribs.u_parallaxscale = m_pShader->InitUniform("parallaxdepth", CGLSLShader::UNIFORM_FLOAT1);
+		m_attribs.u_parallaxlayers = m_pShader->InitUniform("parallaxlayers", CGLSLShader::UNIFORM_FLOAT1);
 		m_attribs.u_cubemapnormal = m_pShader->InitUniform("cubemapnormal", CGLSLShader::UNIFORM_FLOAT1);
 		m_attribs.u_specularfactor = m_pShader->InitUniform("specfactor", CGLSLShader::UNIFORM_FLOAT1);
 		
