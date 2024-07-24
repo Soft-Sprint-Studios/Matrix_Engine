@@ -47,6 +47,7 @@ enum mt_texture_t
 	MT_TX_SPECULAR,
 	MT_TX_LUMINANCE,
 	MT_TX_AO,
+	MT_TX_HEIGHT,
 
 	// Must be last
 	NB_MT_TX,
@@ -143,6 +144,8 @@ struct en_material_t
 	inline en_texture_t* getdetail( void ) { return ptextures[MT_TX_DETAIL]; }
 	inline en_texture_t* getspecular( void ) { return ptextures[MT_TX_SPECULAR]; }
 	inline en_texture_t* getluminance( void ) { return ptextures[MT_TX_LUMINANCE]; }
+	inline en_texture_t* getao(void) { return ptextures[MT_TX_HEIGHT]; }
+	inline en_texture_t* getheight(void) { return ptextures[MT_TX_HEIGHT]; }
 
 	CString filepath;
 	rs_level_t level;

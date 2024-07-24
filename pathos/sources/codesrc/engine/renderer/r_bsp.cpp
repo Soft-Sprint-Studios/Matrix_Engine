@@ -177,6 +177,7 @@ bool CBSPRenderer::InitGL( void )
 			m_attribs.d_cubemaps = m_pShader->GetDeterminatorIndex("cubemaps");
 		m_attribs.d_luminance = m_pShader->GetDeterminatorIndex("luminance");
 		m_attribs.d_ao = m_pShader->GetDeterminatorIndex("ao");
+		m_attribs.d_parallax = m_pShader->GetDeterminatorIndex("parallax");
 		m_attribs.d_numlights = m_pShader->GetDeterminatorIndex("numlights");
 
 		if(!R_CheckShaderDeterminator(m_attribs.d_shadertype, "shadertype", m_pShader, Sys_ErrorPopup)
@@ -186,6 +187,7 @@ bool CBSPRenderer::InitGL( void )
 			|| !R_CheckShaderDeterminator(m_attribs.d_specular, "specular", m_pShader, Sys_ErrorPopup)
 			|| !R_CheckShaderDeterminator(m_attribs.d_luminance, "luminance", m_pShader, Sys_ErrorPopup)
 			|| !R_CheckShaderDeterminator(m_attribs.d_ao, "ao", m_pShader, Sys_ErrorPopup)
+			|| !R_CheckShaderDeterminator(m_attribs.d_parallax, "parallax", m_pShader, Sys_ErrorPopup)
 			|| !R_CheckShaderDeterminator(m_attribs.d_numlights, "numlights", m_pShader, Sys_ErrorPopup))
 			return false;
 
@@ -230,6 +232,8 @@ bool CBSPRenderer::InitGL( void )
 
 		m_attribs.u_uvoffset = m_pShader->InitUniform("uvoffset", CGLSLShader::UNIFORM_FLOAT2);
 		m_attribs.u_phong_exponent = m_pShader->InitUniform("phong_exponent", CGLSLShader::UNIFORM_FLOAT1);
+		m_attribs.u_parallaxscale = m_pShader->InitUniform("parallaxdepth", CGLSLShader::UNIFORM_FLOAT1);
+		m_attribs.u_parallaxlayers = m_pShader->InitUniform("parallaxlayers", CGLSLShader::UNIFORM_FLOAT1);
 		m_attribs.u_cubemapnormal = m_pShader->InitUniform("cubemapnormal", CGLSLShader::UNIFORM_FLOAT1);
 		m_attribs.u_specularfactor = m_pShader->InitUniform("specfactor", CGLSLShader::UNIFORM_FLOAT1);
 		
@@ -1845,6 +1849,12 @@ bool CBSPRenderer::DrawFirst( void )
 				m_pShader->SetUniform1f(m_attribs.u_phong_exponent, pmaterial->phong_exp*g_pCvarPhongExponent->GetValue());
 				m_pShader->SetUniform1f(m_attribs.u_specularfactor, pmaterial->spec_factor);
 			}
+			
+			if (pmaterial->ptextures[MT_TX_HEIGHT])
+			{
+				m_pShader->SetUniform1f(m_attribs.u_parallaxscale, pmaterial->parallaxscale);
+				m_pShader->SetUniform1f(m_attribs.u_parallaxlayers, pmaterial->parallaxlayers);
+			}
 
 			// Reset cubemap bind
 			if(m_isCubemappingSupported && pcubemapinfo && g_pCvarCubemaps->GetValue() > 0 && !cubematrixSet)
@@ -2137,6 +2147,25 @@ bool CBSPRenderer::DrawFirst( void )
 		else
 		{
 			if (!m_pShader->SetDeterminator(m_attribs.d_ao, FALSE))
+				return false;
+		}
+
+		if (pmaterial->ptextures[MT_TX_HEIGHT])
+		{
+			if (!m_pShader->SetDeterminator(m_attribs.d_parallax, TRUE))
+				return false;
+
+			en_texture_t* pheighttexture = pmaterial->ptextures[MT_TX_HEIGHT];
+			m_pShader->SetUniform1i(m_attribs.u_heightmap, textureIndex);
+			R_Bind2DTexture(GL_TEXTURE0 + textureIndex, pheighttexture->palloc->gl_index);
+			textureIndex++;
+
+			// We'll need texcoords
+			useTexcoord = true;
+		}
+		else
+		{
+			if (!m_pShader->SetDeterminator(m_attribs.d_parallax, FALSE))
 				return false;
 		}
 
@@ -2444,6 +2473,22 @@ bool CBSPRenderer::BindTextures( bsp_texture_t* phandle, cubemapinfo_t* pcubemap
 	else
 	{
 		if (!m_pShader->SetDeterminator(m_attribs.d_ao, FALSE, false))
+			return false;
+	}
+
+	if (pmaterial->ptextures[MT_TX_HEIGHT])
+	{
+		if (!m_pShader->SetDeterminator(m_attribs.d_parallax, TRUE, false))
+			return false;
+
+		en_texture_t* pheighttexture = pmaterial->ptextures[MT_TX_HEIGHT];
+		m_pShader->SetUniform1i(m_attribs.u_heightmap, textureIndex);
+		R_Bind2DTexture(GL_TEXTURE0 + textureIndex, pheighttexture->palloc->gl_index);
+		textureIndex++;
+	}
+	else
+	{
+		if (!m_pShader->SetDeterminator(m_attribs.d_parallax, FALSE, false))
 			return false;
 	}
 
