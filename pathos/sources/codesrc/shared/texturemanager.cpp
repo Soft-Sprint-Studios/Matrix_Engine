@@ -793,7 +793,7 @@ en_material_t* CTextureManager::LoadMaterialScript( const Char* pstrFilename, rs
 				else if(!qstrcmp(token, "$phong_exp"))
 					pmaterial->phong_exp = static_cast<Float>(SDL_atof(value));
 				else if (!qstrcmp(token, "$cubemapnormal"))
-					pmaterial->cubemapnormal = (Float)SDL_atof(value);
+					pmaterial->cubemapnormal = static_cast<Float>(SDL_atof(value));
 				else if(!qstrcmp(token, "$spec"))
 					pmaterial->spec_factor = static_cast<Float>(SDL_atof(value));
 				else if(!qstrcmp(token, "$scopescale"))
