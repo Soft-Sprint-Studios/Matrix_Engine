@@ -47,7 +47,6 @@ enum mt_texture_t
 	MT_TX_SPECULAR,
 	MT_TX_LUMINANCE,
 	MT_TX_AO,
-	MT_TX_HEIGHT,
 
 	// Must be last
 	NB_MT_TX,
@@ -131,8 +130,6 @@ struct en_material_t
 		scale(0),
 		cubemapstrength(0),
 		cubemapnormal(0),
-		parallaxscale(0),
-		parallaxlayers(0),
 		scrollu(0),
 		scrollv(0),
 		flags(TX_FL_NONE),
