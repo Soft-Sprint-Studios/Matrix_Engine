@@ -42,7 +42,7 @@ Specification
 		    CSG "-wadautodetect -low -estimate -noinfo"
 		    BSP "-low -estimate -noinfo"
 		    VIS "-full -low -estimate -noinfo"
-		    RAD "-extra -low -estimate -noinfo"
+		    RAD "-extra -low -estimate -noinfo -bumpmapping -bounce 8"
         }
 	}
 
