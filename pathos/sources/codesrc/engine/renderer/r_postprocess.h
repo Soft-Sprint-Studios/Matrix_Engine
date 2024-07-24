@@ -26,7 +26,8 @@ enum pp_shadertypes_t
 	SHADER_NORMAL,
 	SHADER_CHROMATIC,
 	SHADER_BW,
-	SHADER_VIGNETTE
+	SHADER_VIGNETTE,
+	SHADER_AUTOEXPOSURE
 };
 
 struct pp_shader_attribs
@@ -71,6 +72,7 @@ struct pp_shader_attribs
 	Int32	u_chromaticStrength;
 	Int32	u_VignetteStrength;
 	Int32	u_VignetteRadius;
+	Int32   u_autoexposurespeed;
 	Int32	u_BWStrength;
 	Int32	u_offsetdivider;
 
@@ -131,6 +133,8 @@ private:
 	bool DrawFilmGrain( void );
 	// Draws screen chromatic
 	bool DrawChromatic(void);
+	// Draws screen Auto Exposure
+	bool DrawAutoExposure(void);
 	// Draws screen BW
 	bool DrawBW(void);
 	// Draws screen Vignette
@@ -168,6 +172,8 @@ public:
 private:
 	// Gamma cvar
 	CCVar*			m_pCvarGamma;
+	CCVar* m_pCvarAutoExposure;
+	CCVar* m_pCvarAutoExposureSpeed;
 	// Blur FBO binding
 	fbobind_t		m_blurFBO;
 

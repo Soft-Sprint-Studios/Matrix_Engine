@@ -83,6 +83,8 @@ bool CPostProcess :: Init( void )
 {
 	// Set up the cvars
 	m_pCvarGamma = gConsole.CreateCVar(CVAR_FLOAT, (FL_CV_CLIENT|FL_CV_SAVE), GAMMA_CVAR_NAME, "1.8", "Controls gamma value.");
+	m_pCvarAutoExposure = gConsole.CreateCVar(CVAR_FLOAT, (FL_CV_CLIENT | FL_CV_SAVE), "r_autoexposure", "1", "Toggle Chromatic Abberation.");
+	m_pCvarAutoExposureSpeed = gConsole.CreateCVar(CVAR_FLOAT, (FL_CV_CLIENT | FL_CV_SAVE), "r_autoexposurespeed", "1", "Chromatic Abberation Strength.");
 	m_pCvarPostProcess = gConsole.CreateCVar(CVAR_FLOAT, FL_CV_CLIENT, "r_postprocess", "1", "Disable post-process effects." );
 
 	return true;
@@ -131,6 +133,7 @@ bool CPostProcess :: InitGL( void )
 		m_attribs.u_BWStrength = m_pShader->InitUniform("BWStrength", CGLSLShader::UNIFORM_FLOAT1);
 		m_attribs.u_VignetteStrength = m_pShader->InitUniform("vignetteStrength", CGLSLShader::UNIFORM_FLOAT1);
 		m_attribs.u_VignetteRadius = m_pShader->InitUniform("vignetteRadius", CGLSLShader::UNIFORM_FLOAT1);
+		m_attribs.u_autoexposurespeed = m_pShader->InitUniform("exposureAdaptationSpeed", CGLSLShader::UNIFORM_FLOAT1);
 		m_attribs.u_offsetdivider = m_pShader->InitUniform("offsetdivider", CGLSLShader::UNIFORM_FLOAT2);
 		m_attribs.u_texture1 = m_pShader->InitUniform("texture0", CGLSLShader::UNIFORM_INT1);
 		m_attribs.u_texture1rect = m_pShader->InitUniform("texture0rect", CGLSLShader::UNIFORM_INT1);
@@ -589,6 +592,31 @@ bool CPostProcess :: DrawFilmGrain( void )
 // @brief
 //
 //=============================================
+bool CPostProcess::DrawAutoExposure(void)
+{
+	if (!m_useFBOs)
+	{
+		FetchScreen(&m_pScreenRTT);
+		R_BindRectangleTexture(GL_TEXTURE0_ARB, m_pScreenRTT->palloc->gl_index);
+	}
+	else
+	{
+		FetchScreen(&m_pScreenFBO);
+		R_Bind2DTexture(GL_TEXTURE0_ARB, m_pScreenFBO->fbo.ptexture1->gl_index);
+	}
+
+	m_pShader->SetUniform1f(m_attribs.u_autoexposurespeed, m_pCvarAutoExposureSpeed->GetValue());
+	if (!m_pShader->SetDeterminator(m_attribs.d_type, SHADER_AUTOEXPOSURE))
+		return false;
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	return true;
+}
+
+//=============================================
+// @brief
+//
+//=============================================
 bool CPostProcess::DrawChromatic(void)
 {
 	if (!m_useFBOs)
@@ -950,6 +978,18 @@ bool CPostProcess :: Draw( void )
 	{
 		if(!DrawFilmGrain())
 		{
+			m_pShader->DisableShader();
+			m_pVBO->UnBind();
+			return false;
+		}
+	}
+
+	// Render autoexposure
+	if (m_pCvarPostProcess->GetValue() > 0 && m_pCvarAutoExposure->GetValue() > 0)
+	{
+		if (!DrawAutoExposure())
+		{
+			Sys_ErrorPopup("Shader error: %s.", m_pShader->GetError());
 			m_pShader->DisableShader();
 			m_pVBO->UnBind();
 			return false;

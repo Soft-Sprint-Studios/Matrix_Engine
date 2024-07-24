@@ -789,6 +789,16 @@ Specification
 			Type "ColourFloat"
 			Value "0 0 0"
 		}
+
+		Parameter
+		{
+			Name "BumpMapping"
+			Flag "-bumpmaps"
+			Description "Enable or disable normalmapped lighting."
+			Type "Choice"
+			Options "Off,On"
+			OptionValues "0,1"
+		}
 	}
 	
 	
