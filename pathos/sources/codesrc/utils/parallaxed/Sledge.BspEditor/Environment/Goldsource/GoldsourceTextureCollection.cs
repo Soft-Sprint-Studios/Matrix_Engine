@@ -56,6 +56,8 @@ namespace Sledge.BspEditor.Environment.Goldsource
                 case "skip":
                 case "portal":
                     return 0.5f;
+                case "water":
+                    return 0.75f;
                 default:
                     return 1;
             }
