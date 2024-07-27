@@ -144,7 +144,7 @@ struct en_material_t
 	inline en_texture_t* getdetail( void ) { return ptextures[MT_TX_DETAIL]; }
 	inline en_texture_t* getspecular( void ) { return ptextures[MT_TX_SPECULAR]; }
 	inline en_texture_t* getluminance( void ) { return ptextures[MT_TX_LUMINANCE]; }
-	inline en_texture_t* getao(void) { return ptextures[MT_TX_HEIGHT]; }
+	inline en_texture_t* getao(void) { return ptextures[MT_TX_AO]; }
 	inline en_texture_t* getheight(void) { return ptextures[MT_TX_HEIGHT]; }
 
 	CString filepath;

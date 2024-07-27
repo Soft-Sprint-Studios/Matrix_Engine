@@ -26,6 +26,7 @@
  */
 
 bool			g_fastmode = DEFAULT_FASTMODE;
+bool g_studioshadow = DEFAULT_STUDIOSHADOW;
 typedef enum
 {
     eMethodVismatrix,
@@ -501,6 +502,7 @@ static void     ReadLightFile(const char* const filename)
         s_texlights.push_back(texlight);
     }
 	fclose (f); //--vluzacn
+	Log("%u texlights parsed (%s)\n", file_texlights, filename); //readded //seedee
 }
 
 // =====================================================================================
@@ -2687,6 +2689,8 @@ static void     RadWorld()
     // create directlights out of g_patches and lights
     CreateDirectLights();
 
+	LoadStudioModels(); //seedee
+
     Log("\n");
 	
 	// generate a position map for each face
@@ -2780,6 +2784,7 @@ static void     Usage()
     Log("    -circus         : Enable 'circus' mode for locating unlit lightmaps\n");
 	Log("    -nospread       : Disable sunlight spread angles for this compile\n");
     Log("    -nopaque        : Disable the opaque zhlt_lightflags for this compile\n\n");
+	Log("    -nostudioshadow : Disable opaque studiomodels, ignore zhlt_studioshadow for this compile\n\n");
     Log("    -smooth #       : Set smoothing threshold for blending (in degrees)\n");
 	Log("    -smooth2 #      : Set smoothing threshold between different textures\n");
     Log("    -chop #         : Set radiosity patch size for normal textures\n");
@@ -2988,7 +2993,8 @@ static void     Settings()
 
     Log("\n");
 	Log("spread angles        [ %17s ] [ %17s ]\n", g_allow_spread ? "on" : "off", DEFAULT_ALLOW_SPREAD ? "on" : "off");
-    Log("opaque entities      [ %17s ] [ %17s ]\n", g_allow_opaques ? "on" : "off", DEFAULT_ALLOW_OPAQUES ? "on" : "off");
+	Log("opaque brush models  [ %17s ] [ %17s ]\n", g_allow_opaques ? "on" : "off", DEFAULT_ALLOW_OPAQUES ? "on" : "off");
+	Log("opaque studio models [ %17s ] [ %17s ]\n", g_studioshadow ? "on" : "off", DEFAULT_STUDIOSHADOW ? "on" : "off");
     Log("sky lighting fix     [ %17s ] [ %17s ]\n", g_sky_lighting_fix ? "on" : "off", DEFAULT_SKY_LIGHTING_FIX ? "on" : "off");
     Log("incremental          [ %17s ] [ %17s ]\n", g_incremental ? "on" : "off", DEFAULT_INCREMENTAL ? "on" : "off");
     Log("dump                 [ %17s ] [ %17s ]\n", g_dumppatches ? "on" : "off", DEFAULT_DUMPPATCHES ? "on" : "off");
@@ -3264,6 +3270,7 @@ int             main(const int argc, char** argv)
     double          start, end;
     const char*     mapname_from_arg = NULL;
     const char*     user_lights = NULL;
+	char temp[_MAX_PATH]; //seedee
 
     g_Program = "hlrad";
 
@@ -3787,7 +3794,10 @@ int             main(const int argc, char** argv)
 				Usage();
 			}
 		}
-
+		else if (!strcasecmp(argv[i], "-nostudioshadow"))
+		{
+			g_studioshadow = false;
+		}
 		else if (!strcasecmp(argv[i], "-drawpatch"))
 		{
 			g_drawpatch = true;
@@ -4002,6 +4012,8 @@ int             main(const int argc, char** argv)
 
     safe_strncpy(g_Mapname, mapname_from_arg, _MAX_PATH);
     FlipSlashes(g_Mapname);
+	ExtractFilePath(g_Mapname, temp);	// skip mapname
+	ExtractFilePath(temp, g_Wadpath);
     StripExtension(g_Mapname);
     OpenLog(g_clientid);
     atexit(CloseLog);
@@ -4097,7 +4109,7 @@ int             main(const int argc, char** argv)
 	}
 
     RadWorld();
-
+	FreeStudioModels(); //seedee
     FreeOpaqueFaceList();
     FreePatches();
 	DeleteOpaqueNodes ();

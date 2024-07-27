@@ -43,6 +43,7 @@ struct pp_shader_attribs
 		u_screenheight(CGLSLShader::PROPERTY_UNAVAILABLE),
 		u_timer(CGLSLShader::PROPERTY_UNAVAILABLE),
 		u_chromaticStrength(CGLSLShader::PROPERTY_UNAVAILABLE),
+		u_deltatime(CGLSLShader::PROPERTY_UNAVAILABLE),
 		u_BWStrength(CGLSLShader::PROPERTY_UNAVAILABLE),
 		u_VignetteStrength(CGLSLShader::PROPERTY_UNAVAILABLE),
 		u_VignetteRadius(CGLSLShader::PROPERTY_UNAVAILABLE),
@@ -73,6 +74,7 @@ struct pp_shader_attribs
 	Int32	u_VignetteStrength;
 	Int32	u_VignetteRadius;
 	Int32   u_autoexposurespeed;
+	Int32   u_deltatime;
 	Int32	u_BWStrength;
 	Int32	u_offsetdivider;
 

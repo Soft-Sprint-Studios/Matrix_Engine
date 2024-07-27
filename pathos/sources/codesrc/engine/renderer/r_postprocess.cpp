@@ -134,6 +134,7 @@ bool CPostProcess :: InitGL( void )
 		m_attribs.u_VignetteStrength = m_pShader->InitUniform("vignetteStrength", CGLSLShader::UNIFORM_FLOAT1);
 		m_attribs.u_VignetteRadius = m_pShader->InitUniform("vignetteRadius", CGLSLShader::UNIFORM_FLOAT1);
 		m_attribs.u_autoexposurespeed = m_pShader->InitUniform("exposureAdaptationSpeed", CGLSLShader::UNIFORM_FLOAT1);
+		m_attribs.u_deltatime = m_pShader->InitUniform("deltaTime", CGLSLShader::UNIFORM_FLOAT1);
 		m_attribs.u_offsetdivider = m_pShader->InitUniform("offsetdivider", CGLSLShader::UNIFORM_FLOAT2);
 		m_attribs.u_texture1 = m_pShader->InitUniform("texture0", CGLSLShader::UNIFORM_INT1);
 		m_attribs.u_texture1rect = m_pShader->InitUniform("texture0rect", CGLSLShader::UNIFORM_INT1);
@@ -605,7 +606,20 @@ bool CPostProcess::DrawAutoExposure(void)
 		R_Bind2DTexture(GL_TEXTURE0_ARB, m_pScreenFBO->fbo.ptexture1->gl_index);
 	}
 
+
+	static double lastTime = 0.0;
+	double currentTime = Sys_FloatTime();
+
+	if (lastTime == 0.0) {
+		lastTime = currentTime;
+	}
+
+	double frameTime = currentTime - lastTime;
+	lastTime = currentTime;
+	float deltaTime = static_cast<float>(frameTime);
+
 	m_pShader->SetUniform1f(m_attribs.u_autoexposurespeed, m_pCvarAutoExposureSpeed->GetValue());
+	m_pShader->SetUniform1f(m_attribs.u_deltatime, deltaTime);
 	if (!m_pShader->SetDeterminator(m_attribs.d_type, SHADER_AUTOEXPOSURE))
 		return false;
 

@@ -51,7 +51,7 @@ public:
 			pgroup(nullptr)
 		{
 			memset(pchildren, 0, sizeof(pchildren));
-		}
+			}
 
 		vertexnode_t(const vertexnode_t& src):
 			axis(src.axis),
