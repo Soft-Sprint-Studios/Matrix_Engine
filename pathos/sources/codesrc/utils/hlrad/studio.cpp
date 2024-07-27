@@ -119,10 +119,10 @@ void LoadStudioModels( void )
 		entity_t* e = &g_entities[i];
 		name = ValueForKey( e, "classname" );
 
-		if( !stricmp( name, "env_model" ))
+		if( !Q_stricmp( name, "env_model" ))
 		{
 			int spawnflags = IntForKey( e, "spawnflags" );
-			if( spawnflags & 4 ) continue; // shadow disabled
+			if( spawnflags & 16 ) return; // shadow disabled
 		
 			model = ValueForKey( e, "model" );
 
