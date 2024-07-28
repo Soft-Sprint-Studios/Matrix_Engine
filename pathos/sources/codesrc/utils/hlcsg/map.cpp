@@ -286,6 +286,10 @@ static void ParseBrush(entity_t* mapent)
 				strcpy (g_token, "NULL");
 				side->bevel = true;
 			}
+			if (!strncasecmp(g_token, "BEVELHINT", 9))
+			{
+				side->bevel = true;
+			}
 			if (!strncasecmp (g_token, "CLIP", 4))
 			{
 				b->cliphull |= (1 << NUM_HULLS); // arbitrary nonexistent hull
@@ -454,6 +458,7 @@ static void ParseBrush(entity_t* mapent)
 			&& strncasecmp(side->td.name,"HINT",4) && strncasecmp(side->td.name,"SKIP",4)
 			&& strncasecmp(side->td.name,"SOLIDHINT",9)
 			&& strncasecmp(side->td.name,"SPLITFACE",9)
+			&& strncasecmp(side->td.name, "BEVELHINT", 9)
 			&& strncasecmp(side->td.name,"BOUNDINGBOX",11)
 			&& strncasecmp(side->td.name,"CONTENT",7) && strncasecmp(side->td.name,"SKY",3)
 			)

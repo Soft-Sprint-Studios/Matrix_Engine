@@ -396,8 +396,10 @@ static void     SaveOutside(const brush_t* const b, const int hull, bface_t* out
 		backnull = false;
 		if (mirrorcontents == CONTENTS_TOEMPTY)
 		{
-			if (strncasecmp (texname, "SKIP", 4) && strncasecmp (texname, "HINT", 4)
+            if (strncasecmp(texname, "SKIP", 4)
+                && strncasecmp(texname, "HINT", 4)
 				&& strncasecmp (texname, "SOLIDHINT", 9)
+                && strncasecmp(texname, "BEVELHINT", 9)
 				)
 				// SKIP and HINT are special textures for hlbsp
 			{
@@ -453,8 +455,10 @@ static void     SaveOutside(const brush_t* const b, const int hull, bface_t* out
 
 			if (texinfo != -1 // nullified textures (NULL, BEVEL, aaatrigger, etc.)
 				&& !(tex->flags & TEX_SPECIAL) // sky
-				&& strncasecmp (texname, "SKIP", 4) && strncasecmp (texname, "HINT", 4) // HINT and SKIP will be nullified only after hlbsp
+                && strncasecmp(texname, "SKIP", 4)
+                && strncasecmp(texname, "HINT", 4) // HINT and SKIP will be nullified only after hlbsp
 				&& strncasecmp (texname, "SOLIDHINT", 9)
+                && strncasecmp(texname, "BEVELHINT", 9)
 				)
 			{
 				// check for "Malformed face (%d) normal"
@@ -738,8 +742,11 @@ static void     CSGBrush(int brushnum)
 					)
 				{
 					const char *texname = GetTextureByNumber_CSG (f->texinfo);
-					if (f->texinfo == -1 || !strncasecmp (texname, "SKIP", 4) || !strncasecmp (texname, "HINT", 4)
+                    if (f->texinfo == -1
+                        || !strncasecmp(texname, "SKIP", 4)
+                        || !strncasecmp(texname, "HINT", 4)
 						|| !strncasecmp (texname, "SOLIDHINT", 9)
+                        || !strncasecmp(texname, "BEVELHINT", 9)
 						)
 					{
 						// should not nullify the fragment inside detail brush
@@ -893,6 +900,7 @@ static void     CSGBrush(int brushnum)
 							f->backcontents = b2->contents;
 						if (f->contents == CONTENTS_SOLID && f->backcontents == CONTENTS_SOLID
 							&& strncasecmp (GetTextureByNumber_CSG (f->texinfo), "SOLIDHINT", 9)
+                            && strncasecmp(GetTextureByNumber_CSG(f->texinfo), "BEVELHINT", 9)
 							)
 						{
 							FreeFace (f);
@@ -906,6 +914,7 @@ static void     CSGBrush(int brushnum)
 					}
                     if (b1->contents > b2->contents
 						|| b1->contents == b2->contents && !strncasecmp (GetTextureByNumber_CSG (f->texinfo), "SOLIDHINT", 9)
+                        || b1->contents == b2->contents && !strncasecmp(GetTextureByNumber_CSG(f->texinfo), "BEVELHINT", 9)
 						)
                     {                                      // inside a water brush
                         f->contents = b2->contents;
@@ -1757,7 +1766,7 @@ int             main(const int argc, char** argv)
     double          start, end;                 // start/end time log
     const char*     mapname_from_arg = NULL;    // mapname path from passed argvar
 
-    g_Program = "hlcsg";
+    g_Program = "matrixcsg";
 
 	int argcold = argc;
 	char ** argvold = argv;

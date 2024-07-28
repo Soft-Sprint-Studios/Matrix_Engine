@@ -29,9 +29,9 @@
 
 //============================================================================
 
-#define MIN_SUBDIVIDE_SIZE      64
+#define MIN_SUBDIVIDE_SIZE      16
 
-#define MAX_SUBDIVIDE_SIZE      512
+#define MAX_SUBDIVIDE_SIZE      64
 
 #define DEFAULT_SUBDIVIDE_SIZE  ((MAX_SURFACE_EXTENT-1)*TEXTURE_STEP) //#define DEFAULT_SUBDIVIDE_SIZE  240 //--vluzacn
 

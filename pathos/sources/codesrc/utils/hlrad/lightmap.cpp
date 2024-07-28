@@ -5211,14 +5211,58 @@ void            FinalLightFace(const int facenum)
     // sample the triangulation
     //
 
-	if (!g_nightmode || IntForKey(g_face_entity[facenum], "_ignorenight") != 0)
-		minlight = FloatForKey(g_face_entity[facenum], "_minlight") * 128;
-	else
-		minlight = 0;
+	float texMinLight = FloatForKey(g_face_entity[facenum], "_minlight");
 
-	if (!strncasecmp(GetTextureByNumber(f->texinfo), "%", 1)) //If texture name has % flag //seedee
+	float scaledMinLight = texMinLight * 255;
+	scaledMinLight = (scaledMinLight > 255) ? 255 : scaledMinLight;
+
+	// Determine the minlight value based on g_nightmode
+	if (!g_nightmode || IntForKey(g_face_entity[facenum], "_ignorenight") != 0) {
+		minlight = texMinLight * 128;
+	}
+	else {
+		minlight = scaledMinLight; 
+	}
+	const char* texname = GetTextureByNumber(f->texinfo);
+
+	if (!strncasecmp(texname, "%", 1)) //If texture name has % flag //seedee
 	{
-		minlight = 2 * 128; //max _minlight * 128 = fullbright
+		size_t texnameLength = strlen(texname);
+
+		if (texnameLength > 1)
+		{
+			char* minlightValue = new char[texnameLength + 1];
+			int valueIndex = 0;
+			int i = 1;
+
+			if (texname[i] >= '0' && texname[i] <= '9') //Loop until non-digit is found or we run out of space
+			{
+				while (texname[i] != '\0' && texname[i] >= '0' && texname[i] <= '9' && valueIndex < texnameLength)
+				{
+					minlightValue[valueIndex++] = texname[i++];
+				}
+				minlightValue[valueIndex] = '\0';
+				minlight = atoi(minlightValue);
+				delete[] minlightValue;
+
+				minlight = (minlight > 255) ? 255 : minlight;
+			}
+		}
+		else
+		{
+			minlight = 255;
+		}
+	}
+	minlight_i it;
+
+	for (it = s_minlights.begin(); it != s_minlights.end(); it++)
+	{
+		if (!strcasecmp(texname, it->name.c_str()))
+		{
+			float minlightValue = it->value * 255.0f;
+			minlight = static_cast<int>(minlightValue);
+			minlight = (minlight > 255) ? 255 : minlight;
+		}
 	}
 
 	original_basiclight = (vec3_t *)calloc (fl->numsamples, sizeof(vec3_t));

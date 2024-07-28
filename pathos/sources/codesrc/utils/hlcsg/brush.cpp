@@ -10,7 +10,7 @@ hullshape_t		g_hullshapes[MAX_HULLSHAPES];
 
 
 // =====================================================================================
-//  FindIntPlane, fast version (replacement by KGP)
+//  FindIntPlane, fast version (replacement by KGP)BrushContents
 //	This process could be optimized by placing the planes in a (non hash-) set and using
 //	half of the inner loop check below as the comparator; I'd expect the speed gain to be
 //	very large given the change from O(N^2) to O(NlogN) to build the set of planes.
@@ -953,6 +953,8 @@ static contents_t TextureContents(const char* const name)
 
 
 	if (!strncasecmp(name, "solidhint", 9))
+		return CONTENTS_NULL;
+	if (!strncasecmp(name, "bevelhint", 9))
 		return CONTENTS_NULL;
 	if (!strncasecmp(name, "splitface", 9))
 		return CONTENTS_HINT;

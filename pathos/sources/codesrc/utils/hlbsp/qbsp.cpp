@@ -906,7 +906,7 @@ bool            CheckFaceForSkip(const face_t* const f)
 bool CheckFaceForDiscardable (const face_t *f)
 {
 	const char *name = GetTextureByNumber (f->texturenum);
-	if (!strncasecmp (name, "SOLIDHINT", 9))
+    if (!strncasecmp(name, "SOLIDHINT", 9) || !strncasecmp(name, "BEVELHINT", 9))
 		return true;
 	return false;
 }
@@ -1619,7 +1619,7 @@ int             main(const int argc, char** argv)
     double          start, end;
     const char*     mapname_from_arg = NULL;
 
-    g_Program = "hlbsp";
+    g_Program = "matrixbsp";
 
 	int argcold = argc;
 	char ** argvold = argv;

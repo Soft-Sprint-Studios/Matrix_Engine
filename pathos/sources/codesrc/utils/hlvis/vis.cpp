@@ -1317,7 +1317,7 @@ int             main(const int argc, char** argv)
 #ifdef ZHLT_NETVIS
     g_Program = "netvis";
 #else
-    g_Program = "hlvis";
+    g_Program = "matrixvis";
 #endif
 
 	int argcold = argc;
