@@ -278,7 +278,8 @@
       "SmartEdit": {
         "SmartEditFileBrowser": {
           "Browse": "Browse...",
-          "Preview": "Preview"
+          "Preview": "Preview",
+          "StopPreview": "Stop Preview",
         }
       }
     },

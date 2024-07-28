@@ -26,6 +26,10 @@ namespace Sledge.BspEditor.Editing.Components.Properties.SmartEdit
         private readonly TextBox _textBox;
         private readonly Button _browseButton;
         private readonly Button _previewButton;
+        private readonly Button _stopPreviewButton;
+
+        private IWavePlayer _wavePlayer; // Keep track of the wave player to stop it
+        private SoundPlayer _soundPlayer; // To handle .wav playback
 
         public SmartEditFileBrowser()
         {
@@ -35,13 +39,17 @@ namespace Sledge.BspEditor.Editing.Components.Properties.SmartEdit
             _textBox.TextChanged += (sender, e) => OnValueChanged();
             Controls.Add(_textBox);
 
-            _browseButton = new Button { Text = "Browse", Margin = new Padding(1), UseVisualStyleBackColor = false};
+            _browseButton = new Button { Text = "Browse", Margin = new Padding(1), UseVisualStyleBackColor = false };
             _browseButton.Click += OpenModelBrowser;
             Controls.Add(_browseButton);
 
             _previewButton = new Button { Text = "Preview", Margin = new Padding(1), UseVisualStyleBackColor = false };
             _previewButton.Click += PreviewSelection;
             Controls.Add(_previewButton);
+
+            _stopPreviewButton = new Button { Text = "Stop Preview", Margin = new Padding(1), UseVisualStyleBackColor = false };
+            _stopPreviewButton.Click += StopPreview;
+            Controls.Add(_stopPreviewButton);
 
             _root = new WeakReference<IFile>(null);
         }
@@ -65,9 +73,7 @@ namespace Sledge.BspEditor.Editing.Components.Properties.SmartEdit
 
         private FileSystemBrowserDialog CreateDialog(IFile root, string defaultFolder = null)
         {
-            var fs = new FileSystemBrowserDialog(
-                root
-                );
+            var fs = new FileSystemBrowserDialog(root);
             switch (Property.VariableType)
             {
                 case VariableType.Studio:
@@ -140,6 +146,9 @@ namespace Sledge.BspEditor.Editing.Components.Properties.SmartEdit
 
         private void PreviewAudio(IFile audioFile)
         {
+            // Stop any currently playing audio
+            StopPreview();
+
             // Copy the stream to memory to avoid any nasty issues
             MemoryStream ms;
             try
@@ -164,24 +173,20 @@ namespace Sledge.BspEditor.Editing.Components.Properties.SmartEdit
                         if (extension == ".ogg")
                         {
                             ms.Seek(0, SeekOrigin.Begin);
-                            using (var vorbisStream = new NAudio.Vorbis.VorbisWaveReader(ms))
-                            using (var waveOut = new NAudio.Wave.WaveOutEvent())
+                            var vorbisStream = new NAudio.Vorbis.VorbisWaveReader(ms);
+                            _wavePlayer = new WaveOutEvent();
+                            _wavePlayer.Init(vorbisStream);
+                            _wavePlayer.Play();
+                            while (_wavePlayer.PlaybackState == PlaybackState.Playing)
                             {
-                                waveOut.Init(vorbisStream);
-                                waveOut.Play();
-                                while (waveOut.PlaybackState == NAudio.Wave.PlaybackState.Playing)
-                                {
-                                    Thread.Sleep(100);
-                                }
+                                Thread.Sleep(100);
                             }
                         }
-                        else
+                        else if (extension == ".wav")
                         {
                             ms.Seek(0, SeekOrigin.Begin);
-                            using (var player = new SoundPlayer(ms))
-                            {
-                                player.PlaySync();
-                            }
+                            _soundPlayer = new SoundPlayer(ms);
+                            _soundPlayer.Play();
                         }
                     }
                     catch (Exception e)
@@ -190,6 +195,27 @@ namespace Sledge.BspEditor.Editing.Components.Properties.SmartEdit
                     }
                 }
             });
+        }
+
+        private void StopPreview(object sender, EventArgs e)
+        {
+            StopPreview();
+        }
+
+        private void StopPreview()
+        {
+            if (_wavePlayer != null)
+            {
+                _wavePlayer.Stop();
+                _wavePlayer.Dispose();
+                _wavePlayer = null;
+            }
+
+            if (_soundPlayer != null)
+            {
+                _soundPlayer.Stop();
+                _soundPlayer = null;
+            }
         }
 
         private string GetPath(IFile file)
@@ -217,6 +243,7 @@ namespace Sledge.BspEditor.Editing.Components.Properties.SmartEdit
         protected override void OnSetProperty(MapDocument document)
         {
             _previewButton.Visible = Property.VariableType == VariableType.Sound;
+            _stopPreviewButton.Visible = Property.VariableType == VariableType.Sound;
 
             _root = new WeakReference<IFile>(document.Environment.Root);
             _textBox.Text = PropertyValue;
