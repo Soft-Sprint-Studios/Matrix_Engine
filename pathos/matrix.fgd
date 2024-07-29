@@ -619,6 +619,112 @@
 	targetname(target_destination) : "Name"
 ]
 
+// info_minlights
+// It defines per-texture minlights.
+// Add any texture name as a key and their new minlight as the value.
+// Works the same as _minlight keyvalue (range 0-1).
+@PointClass color(210 100 0) = info_minlights : "Defines per-texture minlights. Key = texture name, value = minlight (range 0-1)"
+[
+]
+
+// info_texlights
+// It defines texture lights.
+// Add any texture name as a key and their brightness as the value.
+// Don't need to set colors because hlrad knows texture colors.
+@PointClass color(255 0 0) = info_texlights : "Defines texture lights. Key = texture name, value = brightness OR value = red green blue brightness"
+[
+]
+
+// info_smoothvalue
+// It specifies smoothing threshold angle for each texture.
+@PointClass color(255 0 0) = info_smoothvalue : "Texture name : Threshold of smooth angle"
+[
+]
+
+// info_translucent
+// It defines translucent effect for textures.
+// 0.0 = normal (only receive light from front), 1.0 = receive 100% light from back and 0% from front.
+// Can be used to simulate materials like fabric, coarse glass, plastic.
+// The thickness of brush with translucent textures can not exceed 2 units.
+@PointClass color(255 0 0) = info_translucent : "Texture name : translucent amount (0.0-1.0)"
+[
+]
+
+// light_shadow
+// It creates toggleable shadow for func_door, func_breakable, ...
+@PointClass color(255 255 0) = light_shadow : "Dynamic shadow control"
+[
+	// Control the shadow of this solid entity.
+	// The solid entity must have 'Opaque' set in its lightflags.
+	target(target_destination) : "Target solid entity"
+	// Switch the light_shadow on/off will cause shadow to disappear/appear.
+	targetname(target_source) : "Name"
+	style(choices) : "Appearance (no name allowed)" : "" =
+	[
+		"" : "Normal"
+		10: "Fluorescent flicker"
+		2 : "Slow, strong pulse"
+		11: "Slow pulse, noblack"
+		5 : "Gentle pulse"
+		1 : "Flicker A"
+		6 : "Flicker B"
+		3 : "Candle A"
+		7 : "Candle B"
+		8 : "Candle C"
+		4 : "Fast strobe"
+		9 : "Slow strobe"
+		12 : "Underwater mutation"
+	]
+	pattern(string) : "Custom Appearance"
+	convertto(choices) : "Classname in game" : "light" =
+	[
+		"light" : "light"
+		"light_spot" : "light_spot"
+	]
+	spawnflags(flags) =
+	[
+		1 : "Initially dark" : 0
+		2048 : "Not in Deathmatch" : 0
+	]
+]
+
+// light_bounce
+// Use as complement for light_shadow.
+@PointClass color(255 255 0) = light_bounce : "Bounce light control"
+[
+	// Control the light bounced from this solid entity.
+	target(target_destination) : "Target solid entity"
+	// When the targeted entity disappear, switch on the light_shadow and switch off the light_bounce at the same time.
+	targetname(target_source) : "Name"
+	style(choices) : "Appearance (no name allowed)" : "" =
+	[
+		"" : "Normal"
+		10: "Fluorescent flicker"
+		2 : "Slow, strong pulse"
+		11: "Slow pulse, noblack"
+		5 : "Gentle pulse"
+		1 : "Flicker A"
+		6 : "Flicker B"
+		3 : "Candle A"
+		7 : "Candle B"
+		8 : "Candle C"
+		4 : "Fast strobe"
+		9 : "Slow strobe"
+		12 : "Underwater mutation"
+	]
+	pattern(string) : "Custom Appearance"
+	convertto(choices) : "Classname in game" : "light" =
+	[
+		"light" : "light"
+		"light_spot" : "light_spot"
+	]
+	spawnflags(flags) =
+	[
+		1 : "Initially dark" : 0
+		2048 : "Not in Deathmatch" : 0
+	]
+]
+
 @PointClass iconsprite("sprites/speaker.spr") base(Targetname) size(-8 -8 -8, 8 8 8) = ambient_generic : "Universal Ambient"
 [
   message(sound) : "Path/filename.wav of WAV"
@@ -1321,6 +1427,21 @@
   [
     32: "Toggle" : 0
     64: "Start ON" : 0
+  ]
+]
+@PointClass base(Targetname, Angles) size(-16 -16 -16, 16 16 16) = math_counter : "Math Counter"
+[
+  startvalue(integer) : "Start Value" : "0"
+  increment(integer) : "Increment Value" : "1"
+  maxvalue(integer) : "Maximum Value" : "100"
+  minvalue(integer) : "Minimum Value" : "0"
+  target(target_source) : "Target to trigger when the value exceeds or drops below the limits" : "0"
+  spawnflags(flags) =
+  [
+    1: "Reset On Use" : 0
+    2: "Trigger On Max" : 0
+    4: "Trigger On Min" : 0
+    8: "Count Only" : 0
   ]
 ]
 @PointClass base(Targetname, Angles) size(-16 -16 -16, 16 16 16) = env_dustpuff : "Dust Puff" 
