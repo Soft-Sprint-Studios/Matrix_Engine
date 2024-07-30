@@ -1,5 +1,5 @@
-#ifndef MATH_COUNTER_H
-#define MATH_COUNTER_H
+#ifndef MATHCOUNTER
+#define MATHCOUNTER
 
 #include "pointentity.h"
 
@@ -48,4 +48,4 @@ private:
     CEntityHandle m_activator;
 };
 
-#endif // MATH_COUNTER_H
+#endif // MATHCOUNTER

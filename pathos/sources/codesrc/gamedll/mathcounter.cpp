@@ -1,6 +1,6 @@
 #include "includes.h"
 #include "gd_includes.h"
-#include "math_counter.h"
+#include "mathcounter.h"
 
 // Default values
 const int CMathCounter::DEFAULT_START_VALUE = 0;
