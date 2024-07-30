@@ -88,7 +88,6 @@ bool CMathCounter::Spawn(void)
     if (!CPointEntity::Spawn())
         return false;
 
-    // Initialize the value if necessary
     if (m_value < m_minValue)
         m_value = m_minValue;
     else if (m_value > m_maxValue)
@@ -97,7 +96,6 @@ bool CMathCounter::Spawn(void)
     // Handle spawn flags
     if (HasSpawnFlag(FL_COUNT_ONLY))
     {
-        // Only count, don't trigger targets
         m_target.clear();
     }
 
@@ -111,7 +109,6 @@ void CMathCounter::IncrementValue(void)
 {
     if (HasSpawnFlag(FL_COUNT_ONLY))
     {
-        // Just increment without triggering targets
         m_value += m_increment;
         if (m_value > m_maxValue)
             m_value = m_maxValue;
@@ -125,13 +122,11 @@ void CMathCounter::IncrementValue(void)
     if (HasSpawnFlag(FL_TRIGGER_ON_MAX) && m_value > m_maxValue)
     {
         m_value = m_maxValue;
-        // Trigger targets using UseTargets
         UseTargets(m_activator, USE_TOGGLE, 0);
     }
     else if (HasSpawnFlag(FL_TRIGGER_ON_MIN) && m_value < m_minValue)
     {
         m_value = m_minValue;
-        // Trigger targets using UseTargets
         UseTargets(m_activator, USE_TOGGLE, 0);
     }
 }
@@ -141,7 +136,6 @@ void CMathCounter::IncrementValue(void)
 //=============================================
 void CMathCounter::CallUse(CBaseEntity* pActivator, CBaseEntity* pCaller, usemode_t useMode, Float value)
 {
-    // Set the activator (usually the entity that triggered the action)
     m_activator = pActivator;
 
     switch (useMode)
