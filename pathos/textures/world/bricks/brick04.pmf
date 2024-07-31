@@ -3,8 +3,11 @@ $texture
 	$int_width 1024
 	$int_height 1024
 	$material brick
+	$parallaxscale 0.04
+	$parallaxlayers 32
 	$texture diffuse world/bricks/brick04.dds
 	$texture normal world/bricks/brick04_normal.dds
 	$texture specular world/bricks/brick04_specular.dds
 	$texture ao world/bricks/brick04_ao.dds
+	$texture height world/bricks/brick04_height.dds
 }
