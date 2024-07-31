@@ -1938,6 +1938,7 @@ bool CBSPRenderer::DrawFirst( void )
 				|| !m_pShader->SetDeterminator(m_attribs.d_bumpmapping, FALSE, false)
 				|| !m_pShader->SetDeterminator(m_attribs.d_luminance, FALSE, false)
 				|| !m_pShader->SetDeterminator(m_attribs.d_ao, FALSE, false)
+				|| !m_pShader->SetDeterminator(m_attribs.d_parallax, FALSE, false)
 				|| !m_pShader->SetDeterminator(m_attribs.d_shadertype, shader_solidcolor))
 				return false;
 
