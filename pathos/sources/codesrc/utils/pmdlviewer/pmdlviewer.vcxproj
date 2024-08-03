@@ -280,7 +280,7 @@
       <OutputFile>$(OutDir)/pmdlviewer.exe</OutputFile>
       <Version>1.2</Version>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>.\x64\Release;..\mxtk\msvc\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\libs\sdl2.0\lib;.\x64\Release;..\mxtk\msvc\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ProgramDatabaseFile>$(TargetDir)$(TargetName).pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
@@ -317,6 +317,7 @@
     <ClInclude Include="..\..\common\tgaformat.h" />
     <ClInclude Include="..\..\common\vector.h" />
     <ClInclude Include="..\..\common\vector_inline.hpp" />
+    <ClInclude Include="..\..\engine\bmp.h" />
     <ClInclude Include="..\..\shared\flexmanager.h" />
     <ClInclude Include="..\..\shared\includes.h" />
     <ClInclude Include="..\..\shared\r_basicdraw.h" />
@@ -350,6 +351,7 @@
     <ClCompile Include="..\..\common\md5.cpp" />
     <ClCompile Include="..\..\common\r_common.cpp" />
     <ClCompile Include="..\..\common\tga.cpp" />
+    <ClCompile Include="..\..\engine\bmp.cpp" />
     <ClCompile Include="..\..\shared\flexmanager.cpp" />
     <ClCompile Include="..\..\shared\r_basicdraw.cpp" />
     <ClCompile Include="..\..\shared\r_glextf.cpp" />

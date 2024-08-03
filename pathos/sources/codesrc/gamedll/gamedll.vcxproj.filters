@@ -145,6 +145,12 @@
     <Filter Include="Source Files\baseclasses">
       <UniqueIdentifier>{7ab7a899-3b5a-4953-ab3a-ed5180623ea7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\entities\math">
+      <UniqueIdentifier>{4eec09e2-0eeb-4212-ac36-7da17adb6e1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\entities\math">
+      <UniqueIdentifier>{b69e8c28-a280-4feb-8dbf-5a7d8e6d8fa2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gamedll.cpp">
@@ -917,6 +923,9 @@
     </ClCompile>
     <ClCompile Include="envfilmgrain.cpp">
       <Filter>Source Files\entities\env</Filter>
+    </ClCompile>
+    <ClCompile Include="mathcounter.cpp">
+      <Filter>Source Files\entities\math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1723,6 +1732,9 @@
     </ClInclude>
     <ClInclude Include="envfilmgrain.h">
       <Filter>Header Files\entities\env</Filter>
+    </ClInclude>
+    <ClInclude Include="mathcounter.h">
+      <Filter>Header Files\entities\math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

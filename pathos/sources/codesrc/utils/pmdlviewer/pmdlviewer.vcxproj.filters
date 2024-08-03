@@ -85,6 +85,9 @@
     <ClCompile Include="..\..\common\md5.cpp">
       <Filter>src\shared</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\engine\bmp.cpp">
+      <Filter>src\common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include=".\viewerstate.h">
@@ -214,6 +217,9 @@
       <Filter>include\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\common\md5.h">
+      <Filter>include\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engine\bmp.h">
       <Filter>include\common</Filter>
     </ClInclude>
   </ItemGroup>

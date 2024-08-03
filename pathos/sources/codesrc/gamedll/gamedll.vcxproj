@@ -324,6 +324,7 @@
     <ClCompile Include="itemshoulderlight.cpp" />
     <ClCompile Include="itemsodacan.cpp" />
     <ClCompile Include="itemtaperecorder.cpp" />
+    <ClCompile Include="mathcounter.cpp" />
     <ClCompile Include="multidamage.cpp" />
     <ClCompile Include="delayentity.cpp" />
     <ClCompile Include="envblur.cpp" />
@@ -529,6 +530,7 @@
     <ClInclude Include="itemglockflashlight.h" />
     <ClInclude Include="itemglocksilencer.h" />
     <ClInclude Include="itemtaperecorder.h" />
+    <ClInclude Include="mathcounter.h" />
     <ClInclude Include="nodeviewer.h" />
     <ClInclude Include="npcclonesoldier.h" />
     <ClInclude Include="npcgeneric.h" />
