@@ -140,7 +140,8 @@ bool CWorldSpawn::KeyValue( const keyvalue_t& kv )
 		|| !qstrcmp(kv.keyname, "mapteams")
 		|| !qstrcmp(kv.keyname, "defaultteam")
 		|| !qstrcmp(kv.keyname, "overdarken")
-		|| !qstrcmp(kv.keyname, "specialfog"))
+		|| !qstrcmp(kv.keyname, "specialfog")
+		|| !qstrcmp(kv.keyname, "timeofday"))
 	{
 		// Shut engine up about unhandled keyvalues
 		return true;

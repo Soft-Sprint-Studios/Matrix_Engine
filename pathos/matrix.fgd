@@ -1,5 +1,5 @@
 
-// Pathos Engine FGD file
+// Matrix Engine FGD file
 
 //
 // worldspawn
@@ -8,6 +8,16 @@
 @SolidClass = worldspawn : "World entity" 
 [
   skyname(string) : "environment map (cl_skyname)"
+  chaptertitle(string) : "Chapter Title Message" : "" : "Chapter Title that appears onscreen when this level starts, must add it into titles.txt."
+  timeofday(choices) : "Time of day" : 0 = 
+  [
+    0: "Midnight"
+    1: "Dawn"
+	2: "Morning"
+	3: "Afternoon"
+	4: "Dusk"
+	5: "Evening"
+  ]
 ]
 
 //
