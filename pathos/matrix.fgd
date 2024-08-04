@@ -1448,7 +1448,6 @@
     1: "Reset On Use" : 0
     2: "Trigger On Max" : 0
     4: "Trigger On Min" : 0
-    8: "Count Only" : 0
   ]
 ]
 @PointClass base(Targetname, Angles) size(-16 -16 -16, 16 16 16) = env_dustpuff : "Dust Puff" 
