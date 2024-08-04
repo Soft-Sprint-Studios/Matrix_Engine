@@ -355,6 +355,8 @@
     <ClInclude Include="..\common\com_math.h" />
     <ClInclude Include="..\common\com_math_inline.hpp" />
     <ClInclude Include="..\common\datatypes.h" />
+    <ClInclude Include="..\common\dynamicarray.h" />
+    <ClInclude Include="..\common\dynamicarray_inline.hpp" />
     <ClInclude Include="..\common\filechunk.h" />
     <ClInclude Include="..\common\file_interface.h" />
     <ClInclude Include="..\common\matrix.h" />

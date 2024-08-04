@@ -1736,5 +1736,11 @@
     <ClInclude Include="mathcounter.h">
       <Filter>Header Files\entities\math</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\dynamicarray.h">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\dynamicarray_inline.hpp">
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

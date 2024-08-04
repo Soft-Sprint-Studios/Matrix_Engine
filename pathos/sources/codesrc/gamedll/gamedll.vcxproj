@@ -463,6 +463,8 @@
     <ClInclude Include="..\common\crc32.h" />
     <ClInclude Include="..\common\cstring.h" />
     <ClInclude Include="..\common\cstring_inline.hpp" />
+    <ClInclude Include="..\common\dynamicarray.h" />
+    <ClInclude Include="..\common\dynamicarray_inline.hpp" />
     <ClInclude Include="..\common\logfile.h" />
     <ClInclude Include="..\common\vector.h" />
     <ClInclude Include="..\common\vector_inline.hpp" />

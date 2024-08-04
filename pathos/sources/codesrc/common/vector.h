@@ -93,4 +93,4 @@ public:
 inline Vector operator*( Float lhv, const Vector& rhv );
 
 #include "vector_inline.hpp"
-#endif // VECTOR_H
+#endif // VECTOR_H	

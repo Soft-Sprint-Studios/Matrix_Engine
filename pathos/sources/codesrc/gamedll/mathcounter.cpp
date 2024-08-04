@@ -20,7 +20,8 @@ CMathCounter::CMathCounter(edict_t* pedict) :
     m_increment(DEFAULT_INCREMENT),
     m_maxValue(DEFAULT_MAX_VALUE),
     m_minValue(DEFAULT_MIN_VALUE),
-    m_target(nullptr)
+    m_target(nullptr),
+    m_operation(ADD)
 {
 }
 
@@ -44,6 +45,7 @@ void CMathCounter::DeclareSaveFields(void)
     DeclareSaveField(DEFINE_DATA_FIELD(CMathCounter, m_maxValue, EFIELD_INT32));
     DeclareSaveField(DEFINE_DATA_FIELD(CMathCounter, m_minValue, EFIELD_INT32));
     DeclareSaveField(DEFINE_DATA_FIELD(CMathCounter, m_target, EFIELD_STRING));
+    DeclareSaveField(DEFINE_DATA_FIELD(CMathCounter, m_operation, EFIELD_INT32));
 }
 
 //=============================================
@@ -76,6 +78,15 @@ bool CMathCounter::KeyValue(const keyvalue_t& kv)
         m_target = kv.value;
         return true;
     }
+    else if (!qstrcmp(kv.keyname, "operation"))
+    {
+        int op = SDL_atoi(kv.value);
+        if (op >= 0 && op <= 3)
+        {
+            m_operation = static_cast<Operation>(op);
+        }
+        return true;
+    }
     else
         return CPointEntity::KeyValue(kv);
 }
@@ -103,21 +114,52 @@ bool CMathCounter::Spawn(void)
 }
 
 //=============================================
-// @brief Increase the counter value
+// @brief Increase or modify the counter value
 //=============================================
 void CMathCounter::IncrementValue(void)
 {
     if (HasSpawnFlag(FL_COUNT_ONLY))
     {
-        m_value += m_increment;
+        switch (m_operation)
+        {
+        case ADD:
+            m_value += m_increment;
+            break;
+        case SUBTRACT:
+            m_value -= m_increment;
+            break;
+        case DIVIDE:
+            if (m_increment != 0)
+                m_value /= m_increment;
+            break;
+        case MULTIPLY:
+            m_value *= m_increment;
+            break;
+        }
         if (m_value > m_maxValue)
             m_value = m_maxValue;
         else if (m_value < m_minValue)
             m_value = m_minValue;
+
         return;
     }
 
-    m_value += m_increment;
+    switch (m_operation)
+    {
+    case ADD:
+        m_value += m_increment;
+        break;
+    case SUBTRACT:
+        m_value -= m_increment;
+        break;
+    case DIVIDE:
+        if (m_increment != 0)
+            m_value /= m_increment;
+        break;
+    case MULTIPLY:
+        m_value *= m_increment;
+        break;
+    }
 
     if (HasSpawnFlag(FL_TRIGGER_ON_MAX) && m_value > m_maxValue)
     {

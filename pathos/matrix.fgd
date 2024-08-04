@@ -1436,6 +1436,13 @@
   maxvalue(integer) : "Maximum Value" : "100"
   minvalue(integer) : "Minimum Value" : "0"
   target(target_source) : "Target to trigger when the value exceeds or drops below the limits" : "0"
+  operation(Choices) : "Operation" : 0 =
+  [ 
+     0 : "Addition"
+     1 : "Subtraction"
+	 2 : "Division"
+	 3 : "Multiplication"
+  ]
   spawnflags(flags) =
   [
     1: "Reset On Use" : 0

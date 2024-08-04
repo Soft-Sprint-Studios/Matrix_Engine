@@ -15,6 +15,14 @@ public:
     static const int DEFAULT_MAX_VALUE;
     static const int DEFAULT_MIN_VALUE;
 
+    enum Operation
+    {
+        ADD = 0,
+        SUBTRACT = 1,
+        DIVIDE = 2,
+        MULTIPLY = 3
+    };
+
 public:
     explicit CMathCounter(edict_t* pedict);
     virtual ~CMathCounter(void);
@@ -45,6 +53,7 @@ private:
     int m_maxValue;
     int m_minValue;
     CString m_target;
+    Operation m_operation;
     CEntityHandle m_activator;
 };
 
