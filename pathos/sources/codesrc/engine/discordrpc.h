@@ -1,5 +1,5 @@
-#ifndef DISCORDRPCSYSTEM_H
-#define DISCORDRPCSYSTEM_H
+#ifndef DISCORDRPC_H
+#define DISCORDRPC_H
 
 #include <discord_rpc.h>
 #include <ctime>
@@ -9,4 +9,4 @@ void handleDiscordReady(const DiscordUser* request);
 void initializeDiscord();
 void updateRichPresence(const char* mapName);
 
-#endif // DISCORDRPCSYSTEM_H
+#endif // DISCORDRPC_H

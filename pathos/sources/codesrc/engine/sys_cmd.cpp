@@ -37,6 +37,7 @@ All Rights Reserved.
 #include "r_menu.h"
 #include "vid.h"
 #include "filewriterthread.h"
+#include "dynamicarray.h"
 
 // Port CVAR
 CCVar* g_pCVarPort = nullptr;
@@ -98,16 +99,9 @@ void Cmd_ListMaps() {
 		return;
 	}
 
-	size_t mapListSize = 10;
-	char** mapList = (char**)malloc(mapListSize * sizeof(char*));
-	size_t mapCount = 0;
+	DynamicArray mapList;
 
 	do {
-		if (mapCount >= mapListSize) {
-			mapListSize *= 2;
-			mapList = (char**)realloc(mapList, mapListSize * sizeof(char*));
-		}
-
 		char* fileName = fileData.cFileName;
 		size_t len = strlen(fileName);
 		if (len > 4 && strcmp(fileName + len - 4, ".bsp") == 0) {
@@ -115,24 +109,22 @@ void Cmd_ListMaps() {
 			strncpy(mapName, fileName, len - 4);
 			mapName[len - 4] = '\0';
 
-			mapList[mapCount] = mapName;
-			mapCount++;
+			mapList.add(mapName);
+
+			free(mapName);
 		}
 	} while (FindNextFile(hFind, &fileData) != 0);
 	FindClose(hFind);
 
-	if (mapCount == 0) {
+	if (mapList.size() == 0) {
 		Con_Printf("No maps found in the maps folder.\n");
 	}
 	else {
 		Con_Printf("List of maps in the maps folder:\n");
-		for (size_t i = 0; i < mapCount; ++i) {
+		for (size_t i = 0; i < mapList.size(); ++i) {
 			Con_Printf("- %s\n", mapList[i]);
-			free(mapList[i]);
 		}
 	}
-
-	free(mapList);
 }
 
 //=============================================
