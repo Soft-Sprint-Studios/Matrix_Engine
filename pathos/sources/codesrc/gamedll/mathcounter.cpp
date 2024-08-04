@@ -104,12 +104,6 @@ bool CMathCounter::Spawn(void)
     else if (m_value > m_maxValue)
         m_value = m_maxValue;
 
-    // Handle spawn flags
-    if (HasSpawnFlag(FL_COUNT_ONLY))
-    {
-        m_target.clear();
-    }
-
     return true;
 }
 
@@ -118,32 +112,6 @@ bool CMathCounter::Spawn(void)
 //=============================================
 void CMathCounter::IncrementValue(void)
 {
-    if (HasSpawnFlag(FL_COUNT_ONLY))
-    {
-        switch (m_operation)
-        {
-        case ADD:
-            m_value += m_increment;
-            break;
-        case SUBTRACT:
-            m_value -= m_increment;
-            break;
-        case DIVIDE:
-            if (m_increment != 0)
-                m_value /= m_increment;
-            break;
-        case MULTIPLY:
-            m_value *= m_increment;
-            break;
-        }
-        if (m_value > m_maxValue)
-            m_value = m_maxValue;
-        else if (m_value < m_minValue)
-            m_value = m_minValue;
-
-        return;
-    }
-
     switch (m_operation)
     {
     case ADD:

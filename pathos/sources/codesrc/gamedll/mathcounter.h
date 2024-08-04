@@ -34,7 +34,6 @@ public:
         FL_RESET_ON_USE = (1 << 0),  // Resets counter to start value on use
         FL_TRIGGER_ON_MAX = (1 << 1),  // Triggers target when value exceeds max value
         FL_TRIGGER_ON_MIN = (1 << 2),  // Triggers target when value drops below min value
-        FL_COUNT_ONLY = (1 << 3),  // Only increments value, does not trigger targets
     };
 
 public:
